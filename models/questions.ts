@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+// TODO: Enter valid scheme
+
 const questionsSchema = new mongoose.Schema({
   creator: { type: String, required: true },
   name: { type: String, required: true },
