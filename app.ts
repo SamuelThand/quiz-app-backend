@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 // import expressSession from 'express-session';
 
 //  for testing
-import { coursesModel } from './models/testing';
+import { courseModel } from './models/testing';
 
 //  Configure DOTENV
 dotenv.config();
@@ -39,7 +39,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.get('/testing', (req, res) => {
-  coursesModel.find((error: any, course: any) => {
+  courseModel.find((error: any, course: any) => {
     if (error) {
       res.send(error);
       return false;

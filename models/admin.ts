@@ -1,6 +1,6 @@
 import { model, Model, Schema } from 'mongoose';
 
-interface IAdmins {
+interface IAdmin {
   firstName: string;
   lastName: string;
   userName: string;
@@ -10,11 +10,11 @@ interface IAdmins {
   sex?: Boolean;
 }
 
-interface IAdminsMethods {}
+interface IAdminMethods {}
 
-interface AdminsModel extends Model<IAdmins, {}, IAdminsMethods> {}
+interface AdminModel extends Model<IAdmin, {}, IAdminMethods> {}
 
-const adminsSchema = new Schema<IAdmins, AdminsModel, IAdminsMethods>({
+const adminSchema = new Schema<IAdmin, AdminModel, IAdminMethods>({
   firstName: {
     type: String,
     required: true
@@ -40,4 +40,4 @@ const adminsSchema = new Schema<IAdmins, AdminsModel, IAdminsMethods>({
 
 // Methods (Document functions)
 
-export const adminsModel = model<IAdmins>('admins', adminsSchema);
+export const adminModel = model<IAdmin>('admin', adminSchema);

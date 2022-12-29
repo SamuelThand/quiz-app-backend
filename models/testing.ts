@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 // Schemas for database collections
 
 //  testing
-const courses = new mongoose.Schema({
+const course = new mongoose.Schema({
   courseCode: {
     type: String,
     uppercase: true,
@@ -18,4 +18,4 @@ const courses = new mongoose.Schema({
   subjectCode: String
 });
 
-export const coursesModel = mongoose.model('courses', courses);
+export const courseModel = mongoose.model('course', course);

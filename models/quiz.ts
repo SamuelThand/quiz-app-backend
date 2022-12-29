@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Admins = require('./admins');
 const Questions = require('./questions');
 
-const quizzesSchema = new mongoose.Schema({
+const quizSchema = new mongoose.Schema({
   creator: {
     type: String,
     ref: 'admins'
@@ -18,4 +18,4 @@ const quizzesSchema = new mongoose.Schema({
   date: Date
 });
 
-export const quizzesModel = mongoose.model('quizzes', quizzesSchema);
+export const quizModel = mongoose.model('quiz', quizSchema);

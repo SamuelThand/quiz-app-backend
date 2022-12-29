@@ -3,7 +3,7 @@ import { model, Model, Schema, Query } from 'mongoose';
 // TODO: Enter valid scheme
 // TODO: Export interfaces needed for routes
 
-interface IQuestions {
+interface IQuestion {
   creator: string;
   name: string;
   question: string;
@@ -17,18 +17,14 @@ interface IQuestions {
   language: string;
 }
 
-interface IQuestionsMethods {}
+interface IQuestionMethods {}
 
-interface QuestionsModel extends Model<IQuestions, {}, IQuestionsMethods> {
+interface QuestionModel extends Model<IQuestion, {}, IQuestionMethods> {
   //  TODO är detta rätt return type? Eller ska det vara ett Query<> objekt?
-  getQuestions(): Promise<IQuestions[]>;
+  getQuestions(): Promise<IQuestion[]>;
 }
 
-const questionsSchema = new Schema<
-  IQuestions,
-  QuestionsModel,
-  IQuestionsMethods
->({
+const questionSchema = new Schema<IQuestion, QuestionModel, IQuestionMethods>({
   creator: { type: String, required: true },
   name: { type: String, required: true },
   question: String,
@@ -45,10 +41,10 @@ const questionsSchema = new Schema<
 // Statics (Model functions)
 
 //  TODO Ska denna funktion vara async?
-questionsSchema.static('getQuestions', function () {
+questionSchema.static('getQuestions', function () {
   return this.find;
 });
 
 // Methods (Document functions)
 
-export const questionsModel = model<IQuestions>('questions', questionsSchema);
+export const questionModel = model<IQuestion>('question', questionSchema);
