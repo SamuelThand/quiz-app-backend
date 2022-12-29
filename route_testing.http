@@ -27,9 +27,40 @@ GET {{url}}/questions
 // Expected response: an object (json) with a questions
 GET {{url}}/questions/Swedish question #1
 
+###############################################
+
 // Test: Get question by id
 // Expected HTTP response status code: 200
 // Expected response: an object (json) with a questions
 GET {{url}}/questions/63ad827e9d82971b6593a00f
+
+###############################################
+
+// Test: Add question
+// Expected HTTP response status code: 200
+// Expected response: an object (json) with a questions
+POST {{url}}/questions HTTP/1.1
+Content-Type: application/json
+
+{
+  "creator": "test",
+  "name": "test",
+  "question": "test",
+  "option1": "test",
+  "option2": "test",
+  "option3": "test",
+  "option4": "test",
+  "correctOption": "test",
+  "level": 1,
+  "subject": ["test"],
+  "language": "test"
+}
+
+###############################################
+// TODO: Decide if we want to use /questions/:id
+// Test: Delete the test question
+// Expected HTTP response status code: 200
+// Expected response: an object (json) with a questions
+DELETE {{url}}/questions/test
 
 ###############################################
