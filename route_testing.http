@@ -1,6 +1,6 @@
 @server = http://localhost
 @port = 3000
-@resource =
+@resource = api
 @url = {{server}}:{{port}}/{{resource}}
 
 ###############################################
@@ -9,5 +9,22 @@
 // Expected HTTP response status code: 200
 // Expected response: an object (json) with an array with all courses (including subject for each course)
 // [{}, {}, ...]
-GET {{url}}testing
+GET {{url}}/testing
 
+// Test: Get questions
+// Expected HTTP response status code: 200
+// Expected response: an object (json) with an array with all questions
+// [{}, {}, ...]
+GET {{url}}/questions
+
+# TODO: Decide if we want to use /questions/:id
+
+// Test: Get question by name
+// Expected HTTP response status code: 200
+// Expected response: an object (json) with a questions
+GET {{url}}/questions/Swedish question #1
+
+// Test: Get question by id
+// Expected HTTP response status code: 200
+// Expected response: an object (json) with a questions
+GET {{url}}/questions/63ad827e9d82971b6593a00f
