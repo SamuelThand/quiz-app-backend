@@ -1,13 +1,43 @@
-const mongoose = require('mongoose');
+import { model, Model, Schema } from 'mongoose';
 
-const adminsSchema = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
-  userName: String,
-  password: String,
+interface IAdmins {
+  firstName: string;
+  lastName: string;
+  userName: string;
+  password: string;
+  date?: Date;
+  age?: Number;
+  sex?: Boolean;
+}
+
+interface IAdminsMethods {}
+
+interface AdminsModel extends Model<IAdmins, {}, IAdminsMethods> {}
+
+const adminsSchema = new Schema<IAdmins, AdminsModel, IAdminsMethods>({
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
+    type: String,
+    required: true
+  },
+  userName: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
   date: Date,
   age: Number,
   sex: Boolean
 });
 
-export const adminsModel = mongoose.model('admins', adminsSchema);
+// Statics (Model functions)
+
+// Methods (Document functions)
+
+export const adminsModel = model<IAdmins>('admins', adminsSchema);
