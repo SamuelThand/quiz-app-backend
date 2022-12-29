@@ -5,20 +5,9 @@ const questionsRoutes = Express.Router();
 
 questionsRoutes.get(
   '/',
-  function (req: Express.Request, res: Express.Response) {
-    questionModel.find((error: any, question: any) => {
-      if (error) {
-        res
-          .status(500)
-          .send({ message: 'Error when getting question.', error });
-        return false;
-      } else if (!question) {
-        res.status(404).send({ message: 'No question found.' });
-        return false;
-      }
-      res.status(200).json(question);
-      return true;
-    });
+  async function (req: Express.Request, res: Express.Response) {
+    const respon = await questionModel.getQuestions();
+    res.status(200).json(respon);
   }
 );
 
@@ -27,16 +16,17 @@ questionsRoutes.get(
 questionsRoutes.get(
   '/:name',
   function (req: Express.Request, res: Express.Response) {
-    throw Error('Fool');
+    const name = req.params.name;
+    questionModel.getQuestion(name);
   }
 );
 
-questionsRoutes.get(
-  '/:code',
-  function (req: Express.Request, res: Express.Response) {
-    throw Error('Fool');
-  }
-);
+// questionsRoutes.get(
+//   '/:code',
+//   function (req: Express.Request, res: Express.Response) {
+//     throw Error('Fool');
+//   }
+// );
 
 questionsRoutes.post(
   '/',

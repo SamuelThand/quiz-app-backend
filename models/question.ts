@@ -22,6 +22,7 @@ interface IQuestionMethods {}
 interface QuestionModel extends Model<IQuestion, {}, IQuestionMethods> {
   //  TODO är detta rätt return type? Eller ska det vara ett Query<> objekt?
   getQuestions(): Promise<IQuestion[]>;
+  getQuestion(name: string): Promise<IQuestion>;
 }
 
 const questionSchema = new Schema<IQuestion, QuestionModel, IQuestionMethods>({
@@ -41,8 +42,13 @@ const questionSchema = new Schema<IQuestion, QuestionModel, IQuestionMethods>({
 // Statics (Model functions)
 
 //  TODO Ska denna funktion vara async?
-questionSchema.static('getQuestions', function () {
-  return this.find;
+questionSchema.static('getQuestions', async function () {
+  return this.find({});
+});
+
+// TODO: Possibly return multiple questions?
+questionSchema.static('getQuestion', async function (name: string) {
+  return this.findOne({ name });
 });
 
 // Methods (Document functions)
