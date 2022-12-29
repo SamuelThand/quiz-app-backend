@@ -47,4 +47,7 @@ questionSchema.static('getQuestions', function () {
 
 // Methods (Document functions)
 
-export const questionModel = model<IQuestion>('question', questionSchema);
+export const questionModel = model<IQuestion, QuestionModel>(
+  'question',
+  questionSchema
+);

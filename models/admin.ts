@@ -40,4 +40,4 @@ const adminSchema = new Schema<IAdmin, AdminModel, IAdminMethods>({
 
 // Methods (Document functions)
 
-export const adminModel = model<IAdmin>('admin', adminSchema);
+export const adminModel = model<IAdmin, AdminModel>('admin', adminSchema);

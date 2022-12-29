@@ -32,4 +32,4 @@ const quizSchema = new Schema<IQuiz, QuizModel, IQuizMethods>({
   date: Date
 });
 
-export const quizModel = model('quiz', quizSchema);
+export const quizModel = model<IQuiz, QuizModel>('quiz', quizSchema);
