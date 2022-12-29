@@ -1,6 +1,7 @@
 import { model, Model, Schema, Query } from 'mongoose';
 
 // TODO: Enter valid scheme
+// TODO: Export interfaces needed for routes
 
 interface IQuestions {
   creator: string;
