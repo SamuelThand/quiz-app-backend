@@ -1,13 +1,27 @@
-const mongoose = require('mongoose');
-const Admins = require('./admins');
-const Questions = require('./questions');
+import { model, Model, Schema } from 'mongoose';
 
-const quizSchema = new mongoose.Schema({
+interface IQuiz {
+  creator: string;
+  name: string;
+  questions: string[];
+  level: Number;
+  date: Date;
+}
+
+interface IQuizMethods {}
+
+interface QuizModel extends Model<IQuiz, {}, IQuizMethods> {}
+
+const quizSchema = new Schema<IQuiz, QuizModel, IQuizMethods>({
   creator: {
     type: String,
-    ref: 'admins'
+    ref: 'admins',
+    required: true
   },
-  name: String,
+  name: {
+    String,
+    required: true
+  },
   questions: [
     {
       type: String,
@@ -18,4 +32,4 @@ const quizSchema = new mongoose.Schema({
   date: Date
 });
 
-export const quizModel = mongoose.model('quiz', quizSchema);
+export const quizModel = model('quiz', quizSchema);
