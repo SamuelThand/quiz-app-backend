@@ -1,8 +1,33 @@
-const mongoose = require('mongoose');
+import { model, Model, Schema, Query } from 'mongoose';
 
 // TODO: Enter valid scheme
 
-const questionsSchema = new mongoose.Schema({
+interface IQuestions {
+  creator: string;
+  name: string;
+  question: string;
+  option1: string;
+  optionX: string;
+  option2: string;
+  correctOption: string;
+  date: Date;
+  level: Number;
+  subject: string;
+  language: string;
+}
+
+interface IQuestionsMethods {}
+
+interface QuestionsModel extends Model<IQuestions, {}, IQuestionsMethods> {
+  //  TODO är detta rätt return type? Eller ska det vara ett Query<> objekt?
+  getQuestions(): Promise<IQuestions[]>;
+}
+
+const questionsSchema = new Schema<
+  IQuestions,
+  QuestionsModel,
+  IQuestionsMethods
+>({
   creator: { type: String, required: true },
   name: { type: String, required: true },
   question: String,
@@ -16,8 +41,13 @@ const questionsSchema = new mongoose.Schema({
   language: String
 });
 
-questionsSchema.statics.getQuestions = function () {
-  return this.questions;
-};
+// Statics (Model functions)
 
-export const questionsModel = mongoose.model('questions', questionsSchema);
+//  TODO Ska denna funktion vara async?
+questionsSchema.static('getQuestions', function () {
+  return this.find;
+});
+
+// Methods (Document functions)
+
+export const questionsModel = model<IQuestions>('questions', questionsSchema);
