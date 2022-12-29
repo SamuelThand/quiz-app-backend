@@ -1,8 +1,28 @@
-const mongoose = require('mongoose');
+import { model, Model, Schema } from 'mongoose';
 
-const subjectSchema = new mongoose.Schema({
+interface ISubject {
+  name: string;
+  subjectCode: string;
+  description: string;
+}
+
+interface ISubjectMethods {}
+
+interface SubjectModel extends Model<ISubject, {}, ISubjectMethods> {}
+
+const subjectSchema = new Schema<ISubject, SubjectModel, ISubjectMethods>({
   name: String,
+  subjectCode: {
+    type: String,
+    uppercase: true,
+    minLength: 3,
+    maxLength: 3,
+    required: true
+  },
   description: String
 });
 
-export const subjectModel = mongoose.model('subject', subjectSchema);
+export const subjectModel = model<ISubject, SubjectModel>(
+  'subject',
+  subjectSchema
+);
