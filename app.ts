@@ -5,6 +5,9 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 // import expressSession from 'express-session';
 
+// import routes from './routes/questions'
+import questionsRoutes from './routes/questions';
+
 //  for testing
 import { courseModel } from './models/testing';
 
@@ -48,6 +51,8 @@ app.get('/testing', (req, res) => {
     return true;
   });
 });
+
+app.use('/questions', questionsRoutes);
 
 mongoose
   .connect(process.env.DB_SERVER!)
