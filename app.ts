@@ -1,6 +1,3 @@
-//  TODO convert to typescript
-//  TODO vilken version att compila till i tsconfig?
-
 // Include all needed modules
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
@@ -9,7 +6,7 @@ import mongoose from 'mongoose';
 // import expressSession from 'express-session';
 
 //  for testing
-const testModel = require('./models/testing');
+import { coursesModel } from './models/testing';
 
 //  Configure DOTENV
 dotenv.config();
@@ -42,7 +39,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.get('/testing', (req, res) => {
-  testModel.coursesModel.find((error: any, course: any) => {
+  coursesModel.find((error: any, course: any) => {
     if (error) {
       res.send(error);
       return false;

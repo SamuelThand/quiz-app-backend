@@ -1,6 +1,6 @@
 @server = http://localhost
 @port = 3000
-@resource = api
+@resource =
 @url = {{server}}:{{port}}/{{resource}}
 
 ###############################################
@@ -9,5 +9,5 @@
 // Expected HTTP response status code: 200
 // Expected response: an object (json) with an array with all courses (including subject for each course)
 // [{}, {}, ...]
-GET {{url}}/courses
+GET {{url}}testing
 
