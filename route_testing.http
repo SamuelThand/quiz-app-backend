@@ -1,7 +1,6 @@
 @server = http://localhost
 @port = 3000
-@resource = api
-@url = {{server}}:{{port}}/{{resource}}
+@url = {{server}}:{{port}}
 
 ###############################################
 
@@ -11,11 +10,15 @@
 // [{}, {}, ...]
 GET {{url}}/testing
 
+###############################################
+
 // Test: Get questions
 // Expected HTTP response status code: 200
 // Expected response: an object (json) with an array with all questions
 // [{}, {}, ...]
 GET {{url}}/questions
+
+###############################################
 
 # TODO: Decide if we want to use /questions/:id
 
@@ -28,3 +31,5 @@ GET {{url}}/questions/Swedish question #1
 // Expected HTTP response status code: 200
 // Expected response: an object (json) with a questions
 GET {{url}}/questions/63ad827e9d82971b6593a00f
+
+###############################################

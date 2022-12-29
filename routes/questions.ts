@@ -1,12 +1,23 @@
 import Express from 'express';
+import { questionModel } from '../models/question';
+
 const questionsRoutes = Express.Router();
-const Questions = require('../models/questions');
 
 questionsRoutes.get(
   '/',
   function (req: Express.Request, res: Express.Response) {
-    Questions.getQuestions().then((obj: [Object]) => {
-      res.status(200).send(obj);
+    questionModel.find((error: any, question: any) => {
+      if (error) {
+        res
+          .status(500)
+          .send({ message: 'Error when getting question.', error });
+        return false;
+      } else if (!question) {
+        res.status(404).send({ message: 'No question found.' });
+        return false;
+      }
+      res.status(200).json(question);
+      return true;
     });
   }
 );
