@@ -70,3 +70,46 @@ Content-Type: application/json
 DELETE {{url}}/questions/test
 
 ###############################################
+
+// Test: Get subjects
+// Expected HTTP response status code: 200 OR 404 if no subjects
+// Expected response: an object (json) with an array with all questions
+// [{}, {}, ...]
+GET {{url}}/subjects
+
+###############################################
+
+// Test: Get subject by subjectCode
+// Expected HTTP response status code: 200
+// Expected response: an object (json) with a subject of economics
+GET {{url}}/subjects/ECO
+
+###############################################
+
+// Test: Get subject by non existing subjectCode
+// Expected HTTP response status code: 404
+// Expected response: message that the subject was not found
+GET {{url}}/subjects/non
+
+###############################################
+
+// Test: Add subject
+// Expected HTTP response status code: 201
+// Expected response: an object (json) with a subject of economics
+POST {{url}}/subjects HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "test",
+  "subjectCode": "tes",
+  "description": "Simple test subject"
+}
+
+###############################################
+
+// Test: Delete subject
+// Expected HTTP response status code: 200 OR 404
+// Expected response: an object (json) with a subject of economics
+DELETE {{url}}/subjects/TES
+
+###############################################

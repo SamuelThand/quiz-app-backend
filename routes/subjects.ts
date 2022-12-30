@@ -1,10 +1,68 @@
 import Express from 'express';
-const routes = Express.Router();
+import { Subject } from '../models/subject';
 
-routes.get('/', function (req: Express.Request, res: Express.Response) {
-  throw Error('Fool');
+const subjectRoutes = Express.Router();
+
+subjectRoutes.get('/', function (req: Express.Request, res: Express.Response) {
+  Subject.getSubjects().then((result) => {
+    if (result.length === 0) {
+      res.status(404).json({ message: 'No subjects found' });
+      return;
+    }
+    res.status(200).json(result);
+  });
 });
 
-routes.get('/:name', function (req: Express.Request, res: Express.Response) {
-  throw Error('Fool');
+subjectRoutes.get(
+  '/:subjectCode',
+  function (req: Express.Request, res: Express.Response) {
+    const subjectCode = req.params.subjectCode;
+    Subject.getSubject(subjectCode).then((result) => {
+      if (!result) {
+        res.status(404).json({ message: 'Subject not found' });
+        return;
+      }
+      res.status(200).json(result);
+    });
+  }
+);
+
+subjectRoutes.post('/', function (req: Express.Request, res: Express.Response) {
+  const subject = req.body;
+  Subject.addSubject(subject).then((result) => {
+    if (!result) {
+      res
+        .status(409)
+        .json({ message: 'A subject already exists with that subject code.' });
+      return;
+    }
+    res.status(201).json(result);
+  });
 });
+
+subjectRoutes.put('/', function (req: Express.Request, res: Express.Response) {
+  const subject = req.body;
+  Subject.updateSubject(subject).then((result) => {
+    if (!result) {
+      res.status(404).json({ message: 'Subject not found' });
+      return;
+    }
+    res.status(200).json(result);
+  });
+});
+
+subjectRoutes.delete(
+  '/:subjectCode',
+  function (req: Express.Request, res: Express.Response) {
+    const subjectCode = req.params.subjectCode;
+    Subject.deleteSubject(subjectCode).then((result) => {
+      if (!result) {
+        res.status(404).json({ message: 'Subject not found' });
+        return;
+      }
+      res.status(200).json(result);
+    });
+  }
+);
+
+export = subjectRoutes;
