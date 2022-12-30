@@ -35,17 +35,7 @@ GET {{url}}/questions
 #   "creator": "Admin",
 #   "name": "Swedish question #1",
 #   "question": "Vad heter Sveriges huvudstad?",
-#   "option1": "Stockholm",
-#   "optionX": "Göteborg",
-#   "option2": "Malmö",
-#   "correctOption": "Stockholm",
-#   "date": "2022-01-01T00:00:00.000Z",
-#   "level": 1,
-#   "subject": [
-#     "geography"
-#   ],
-#   "language": "Swedish"
-# }
+#   ...
 GET {{url}}/questions/63ad827e9d82971b6593a00f
 
 ###############################################
@@ -139,5 +129,54 @@ Content-Type: application/json
 // Expected HTTP response status code: 200 OR 404
 // Expected response: an object (json) with a subject of economics
 DELETE {{url}}/subjects/TES
+
+###############################################
+
+// Test: Get all quizzes
+// Expected HTTP response status code: 200 OR 404 if no quizzes
+// Expected response: an object (json) with an array with all quizzes
+// [{}, {}, ...]
+GET {{url}}/quizzes
+
+###############################################
+
+// Test: Get quiz by name
+// Expected HTTP response status code: 200
+// Expected response: an object (json) with a quiz
+GET {{url}}/quizzes/QuizTest
+
+###############################################
+
+// Test: Get quiz by id
+// Expected HTTP response status code: 200 OR 404 if no quiz with that id
+// Expected response: an object (json) with a quiz
+GET {{url}}/quizzes/63ad827e9d82971b6593a00f
+
+###############################################
+
+// Test: add quiz
+// Expected HTTP response status code: 201 OR 409
+// Expected response: an object (json) with a quiz
+POST {{url}}/quizzes HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "QuizTest",
+  "creator": "test",
+  "questions": [
+    "63ad827e9d82971b6593a00f",
+    "63ad827e9d82971b6593a010",
+    "63ad827e9d82971b6593a011",
+    "63ad827e9d82971b6593a012",
+    "63ad827e9d82971b6593a013"
+    ]
+}
+
+###############################################
+
+// Test: delete quiz
+// Expected HTTP response status code: 200 OR 404
+// Expected response: an object (json) with a quiz
+DELETE {{url}}/quizzes/QuizTest
 
 ###############################################

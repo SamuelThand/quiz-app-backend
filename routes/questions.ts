@@ -107,4 +107,4 @@ questionsRoutes.delete(
   }
 );
 
-export = questionsRoutes;
+export default questionsRoutes;

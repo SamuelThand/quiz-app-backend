@@ -68,7 +68,7 @@ questionSchema.static('getQuestions', function () {
 questionSchema.static('getQuestion', function (id: string) {
   try {
     return this.findById(id);
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     return null;
   }

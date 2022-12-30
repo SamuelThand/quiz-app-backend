@@ -29,7 +29,7 @@ const quizSchema = new Schema<IQuiz, QuizModel, IQuizMethods>({
     required: true
   },
   name: {
-    String,
+    type: String,
     required: true
   },
   questions: [
@@ -41,5 +41,47 @@ const quizSchema = new Schema<IQuiz, QuizModel, IQuizMethods>({
   level: Number,
   date: { type: Date, default: Date.now }
 });
+
+// Statics (Model functions)
+
+/**
+ * Get all quizzes
+ *
+ * @returns {Promise<IQuiz[]>} Promise of all quizzes
+ */
+quizSchema.static('getQuizzes', function () {
+  return this.find({});
+});
+
+/**
+ * Get quiz by name
+ * @param {string} name quiz name
+ * @returns {Promise<IQuiz>} Promise of quiz
+ */
+quizSchema.static('getQuiz', function (name: string) {
+  return this.findOne({ name });
+});
+
+quizSchema.static('getQuizzesByCreator', function (creator: string) {
+  return this.find({ creator });
+});
+
+quizSchema.static('addQuiz', function (quiz: IQuiz) {
+  return this.create(quiz);
+});
+
+quizSchema.static('updateQuiz', function (quiz: IQuiz) {
+  return this.findOneAndUpdate({ name: quiz.name }, quiz, { new: true });
+});
+
+quizSchema.static('deleteQuizByName', function (name: string) {
+  return this.findOneAndDelete({ name });
+});
+
+quizSchema.static('deleteQuizById', function (id: string) {
+  return this.findByIdAndDelete(id);
+});
+
+// Methods (Document functions)
 
 export const Quiz = model<IQuiz, QuizModel>('quiz', quizSchema);
