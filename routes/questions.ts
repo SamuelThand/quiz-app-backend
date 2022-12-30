@@ -1,20 +1,29 @@
 import Express from 'express';
-import { questionModel } from '../models/question';
+import { Question } from '../models/question';
 
 const questionsRoutes = Express.Router();
 
-// Return all questions
+/**
+ * Get all questions
+ *
+ * @route GET /questions
+ */
 questionsRoutes.get(
   '/',
-  async function (req: Express.Request, res: Express.Response) {
-    const result = await questionModel.getQuestions();
-    res.status(200).json(result);
+  function (req: Express.Request, res: Express.Response) {
+    Question.getQuestions().then((result) => {
+      if (result.length === 0) {
+        res.status(404).json({ message: 'No questions found' });
+        return;
+      }
+      res.status(200).json(result);
+    });
   }
 );
 
-// TODO: Remove one of name/code ?
+// TODO: Remove one of name/id ?
 
-// Problem with name as parameter
+// Problem with name as parameter (# and stuff gets lost. Use id instead)
 // questionsRoutes.get(
 //   '/:name',
 //   async function (req: Express.Request, res: Express.Response) {
@@ -25,54 +34,69 @@ questionsRoutes.get(
 //   }
 // );
 
+/**
+ * Get question by id
+ *
+ * @route GET /questions/:id
+ */
 questionsRoutes.get(
   '/:id',
-  async function (req: Express.Request, res: Express.Response) {
+  function (req: Express.Request, res: Express.Response) {
     const id = req.params.id;
     console.log(id);
-    const result = await questionModel.getQuestion(id);
-    res.status(200).json(result);
+    Question.getQuestion(id).then((result) => {
+      if (!result) {
+        res.status(404).json({ message: 'Question not found' });
+        return;
+      }
+      res.status(200).json(result);
+    });
   }
 );
 
+/**
+ * Add a new question
+ *
+ * @route POST /questions
+ */
 questionsRoutes.post(
   '/',
-  async function (req: Express.Request, res: Express.Response) {
-    const creator = req.body.creator;
-    const name = req.body.name;
-    const question = req.body.question;
-    const option1 = req.body.option1;
-    const optionX = req.body.optionX;
-    const option2 = req.body.option2;
-    const correctOption = req.body.correctOption;
-    // Skip date and go for default value (Date.now) instead
-    // const date = req.body.date;
-    const level = req.body.level;
-    const subject = req.body.subject;
-    const language = req.body.language;
-
-    console.log('creator: ' + creator);
-
-    const result = await questionModel.addQuestion(
-      creator,
-      name,
-      question,
-      option1,
-      optionX,
-      option2,
-      correctOption,
-      level,
-      subject,
-      language
-    );
-    res.status(200).json(result);
+  function (req: Express.Request, res: Express.Response) {
+    const newQuestion = new Question(req.body);
+    Question.addQuestion(newQuestion).then((result) => {
+      if (!result) {
+        res.status(400).json({ message: 'Question not added' });
+        return;
+      }
+      res.status(201).json(result);
+    });
   }
 );
 
+/**
+ * Modify a question
+ *
+ * @route PUT /questions/:id
+ */
 questionsRoutes.put(
   '/:id',
   function (req: Express.Request, res: Express.Response) {
-    throw Error('Fool');
+    Question.getQuestion(req.params.id).then((question) => {
+      if (!question) {
+        res.status(404).json({ message: 'Question not found' });
+        return;
+      }
+      question.name = req.body.name;
+      question.creator = req.body.creator;
+      question.language = req.body.language;
+      Question.updateQuestion(question).then((result) => {
+        if (!result) {
+          res.status(400).json({ message: 'Question not updated' });
+          return;
+        }
+        res.status(200).json(result);
+      });
+    });
   }
 );
 
@@ -84,11 +108,21 @@ questionsRoutes.put(
 //   }
 // );
 
+/**
+ * Delete a question by name
+ *
+ * @route DELETE /questions/:name
+ */
 questionsRoutes.delete(
   '/:name',
   async function (req: Express.Request, res: Express.Response) {
-    const result = await questionModel.deleteQuestionByName(req.params.name);
-    res.status(200).json(result);
+    Question.deleteQuestionByName(req.params.name).then((result) => {
+      if (!result) {
+        res.status(404).send('Question not found');
+      } else {
+        res.status(200).json(result);
+      }
+    });
   }
 );
 

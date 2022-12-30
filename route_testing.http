@@ -20,12 +20,10 @@ GET {{url}}/questions
 
 ###############################################
 
-# TODO: Decide if we want to use /questions/:id
-
-// Test: Get question by name
-// Expected HTTP response status code: 200
-// Expected response: an object (json) with a questions
-GET {{url}}/questions/Swedish question #1
+# // Test: Get question by name
+# // Expected HTTP response status code: 200
+# // Expected response: an object (json) with a questions
+# GET {{url}}/questions/Swedish question #1
 
 ###############################################
 
@@ -33,6 +31,13 @@ GET {{url}}/questions/Swedish question #1
 // Expected HTTP response status code: 200
 // Expected response: an object (json) with a questions
 GET {{url}}/questions/63ad827e9d82971b6593a00f
+
+###############################################
+
+// Test: Get question by id
+// Expected HTTP response status code: 404
+// Expected response: Something that says that the question was not found
+GET {{url}}/questions/63ad827e9d82971b6594a00f
 
 ###############################################
 
@@ -57,6 +62,7 @@ Content-Type: application/json
 }
 
 ###############################################
+
 // TODO: Decide if we want to use /questions/:id
 // Test: Delete the test question
 // Expected HTTP response status code: 200

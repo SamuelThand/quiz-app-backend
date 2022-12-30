@@ -12,7 +12,7 @@ interface IQuestion {
   option2: string;
   correctOption: string;
   date: Date;
-  level: Number;
+  level: number;
   subject: string;
   language: string;
 }
@@ -24,18 +24,8 @@ interface QuestionModel extends Model<IQuestion, {}, IQuestionMethods> {
   getQuestions(): Promise<IQuestion[]>;
   getQuestion(name: string): Promise<IQuestion>;
   getQuestionsByCreator(creator: string): Promise<IQuestion[]>;
-  addQuestion(
-    creator: string,
-    name: string,
-    question: string,
-    option1: string,
-    optionX: string,
-    option2: string,
-    correctOption: string,
-    level: Number,
-    subject: string[],
-    language: string
-  ): Promise<IQuestion>;
+  addQuestion(question: IQuestion): Promise<IQuestion>;
+  updateQuestion(question: IQuestion): Promise<IQuestion>;
   deleteQuestionByName(name: string): Promise<IQuestion>;
 }
 
@@ -60,7 +50,7 @@ const questionSchema = new Schema<IQuestion, QuestionModel, IQuestionMethods>({
  *
  * @returns {Promise<IQuestion[]>} Promise of all questions
  */
-questionSchema.static('getQuestions', async function () {
+questionSchema.static('getQuestions', function () {
   return this.find({});
 });
 
@@ -72,8 +62,13 @@ questionSchema.static('getQuestions', async function () {
  * @param {string} id - Id of question
  * @returns {Promise<IQuestion>} Promise of question
  */
-questionSchema.static('getQuestion', async function (id: string) {
-  return this.findById(id);
+questionSchema.static('getQuestion', function (id: string) {
+  try {
+    return this.findById(id);
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 });
 
 /**
@@ -90,59 +85,33 @@ questionSchema.static(
 );
 
 /**
- * Add a new question to the database
+ * Add a new question by sentding a question object
  *
- * @param {string} creator - name of creator
- * @param {string} name - name of question
- * @param {string} question - question
- * @param {string} option1 - first option
- * @param {string} optionX - second option
- * @param {string} option2 - third option
- * @param {string} correctOption - correct option
- * @param {number} level - level of question
- * @param {string[]} subject - subject of question
- * @param {string} language - language of question
- * @returns {Promise<IQuestion>} Promise of the new question
+ * @param {IQuestion} question - Question object
+ * @returns {Promise<IQuestion>} Promise of the added question
  */
-questionSchema.static(
-  'addQuestion',
-  async function (
-    creator: string,
-    name: string,
-    question: string,
-    option1: string,
-    optionX: string,
-    option2: string,
-    correctOption: string,
-    level: number,
-    subject: string[],
-    language: string
-  ) {
-    // TODO: Change name of questionModel to something else, possibly "Question"?
-    const newQuestion = new questionModel({
-      creator,
-      name,
-      question,
-      option1,
-      optionX,
-      option2,
-      correctOption,
-      level,
-      subject,
-      language
-    });
+questionSchema.static('addQuestion', async function (question: IQuestion) {
+  const newQuestion = new Question(question);
+  return newQuestion.save();
+});
 
-    return await newQuestion.save();
-  }
-);
+questionSchema.static('updateQuestion', async function (question: IQuestion) {
+  // TODO: Implement this
+});
 
+/**
+ * Delete a question by name
+ *
+ * @param {string} name - Name of question
+ * @returns {Promise<IQuestion>} Promise of the deleted question
+ */
 questionSchema.static('deleteQuestionByName', async function (name: string) {
   return this.findOneAndDelete({ name });
 });
 
 // Methods (Document functions)
 
-export const questionModel = model<IQuestion, QuestionModel>(
+export const Question = model<IQuestion, QuestionModel>(
   'question',
   questionSchema
 );
