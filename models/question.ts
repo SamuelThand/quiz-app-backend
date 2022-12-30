@@ -29,6 +29,7 @@ interface QuestionModel extends Model<IQuestion, {}, IQuestionMethods> {
   addQuestion(question: IQuestion): Promise<IQuestion>;
   updateQuestion(question: IQuestion): Promise<IQuestion>;
   deleteQuestionByName(name: string): Promise<IQuestion>;
+  deleteQuestionById(id: string): Promise<IQuestion>;
 }
 
 const questionSchema = new Schema<IQuestion, QuestionModel, IQuestionMethods>({
@@ -79,12 +80,9 @@ questionSchema.static('getQuestion', function (id: string) {
  * @param {string} creator - name of creator
  * @returns {Promise<IQuestion[]>} Promise of all questions by the creator
  */
-questionSchema.static(
-  'getQuestionsByCreator',
-  async function (creator: string) {
-    return this.find({ creator });
-  }
-);
+questionSchema.static('getQuestionsByCreator', function (creator: string) {
+  return this.find({ creator });
+});
 
 /**
  * Add a new question by sentding a question object
@@ -92,11 +90,16 @@ questionSchema.static(
  * @param {IQuestion} question - Question object
  * @returns {Promise<IQuestion>} Promise of the added question
  */
-questionSchema.static('addQuestion', async function (question: IQuestion) {
+questionSchema.static('addQuestion', function (question: IQuestion) {
   return this.create(question);
 });
 
-questionSchema.static('updateQuestion', async function (question: IQuestion) {
+/**
+ * Update a question by sending a question object
+ * @param {IQuestion} question - IQuestion object
+ * @returns {Promise<IQuestion>} Promise of the updated question
+ */
+questionSchema.static('updateQuestion', function (question: IQuestion) {
   // TODO: Implement this
 });
 
@@ -106,8 +109,12 @@ questionSchema.static('updateQuestion', async function (question: IQuestion) {
  * @param {string} name - Name of question
  * @returns {Promise<IQuestion>} Promise of the deleted question
  */
-questionSchema.static('deleteQuestionByName', async function (name: string) {
+questionSchema.static('deleteQuestionByName', function (name: string) {
   return this.findOneAndDelete({ name });
+});
+
+questionSchema.static('deleteQuestionById', function (id: string) {
+  return this.findByIdAndDelete(id);
 });
 
 // Methods (Document functions)
