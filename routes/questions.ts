@@ -21,19 +21,6 @@ questionsRoutes.get(
   }
 );
 
-// TODO: Remove one of name/id ?
-
-// Problem with name as parameter (# and stuff gets lost. Use id instead)
-// questionsRoutes.get(
-//   '/:name',
-//   async function (req: Express.Request, res: Express.Response) {
-//     const name = req.params.name;
-//     console.log(name);
-//     const result = await questionModel.getQuestion(name);
-//     res.status(200).json(result);
-//   }
-// );
-
 /**
  * Get question by id
  *
@@ -100,13 +87,7 @@ questionsRoutes.put(
   }
 );
 
-// TODO: Possibly keep this one and remove the name one
-// questionsRoutes.delete(
-//   '/:id',
-//   function (req: Express.Request, res: Express.Response) {
-//     throw Error('Fool');
-//   }
-// );
+// TODO: Change to delete by id (deleteQuestionById()) when frontend is ready
 
 /**
  * Delete a question by name
