@@ -6,8 +6,8 @@ interface IAdmin {
   userName: string;
   password: string;
   date?: Date;
-  age?: Number;
-  sex?: Boolean;
+  age?: number;
+  sex?: boolean;
 }
 
 interface IAdminMethods {}
@@ -31,7 +31,7 @@ const adminSchema = new Schema<IAdmin, AdminModel, IAdminMethods>({
     type: String,
     required: true
   },
-  date: Date,
+  date: { type: Date, default: Date.now },
   age: Number,
   sex: Boolean
 });
@@ -40,4 +40,4 @@ const adminSchema = new Schema<IAdmin, AdminModel, IAdminMethods>({
 
 // Methods (Document functions)
 
-export const adminModel = model<IAdmin, AdminModel>('admin', adminSchema);
+export const Admin = model<IAdmin, AdminModel>('admin', adminSchema);
