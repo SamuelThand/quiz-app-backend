@@ -9,7 +9,7 @@
     "correctOption": "Stockholm",
     "date": "2022-12-30T11:09:50.966Z",
     "level": 1,
-    "subject": ["geography"],
+    "subject": ["GEO"],
     "language": "Swedish"
   },
   {
@@ -22,7 +22,7 @@
     "correctOption": "Carl XVI Gustaf",
     "date": "2022-12-30T11:09:50.966Z",
     "level": 1,
-    "subject": ["history"],
+    "subject": ["HIS"],
     "language": "Swedish"
   },
   {
@@ -35,7 +35,7 @@
     "correctOption": "Stockholm",
     "date": "2022-12-30T11:09:50.966Z",
     "level": 1,
-    "subject": ["geography"],
+    "subject": ["GEO"],
     "language": "English"
   },
   {
@@ -48,7 +48,7 @@
     "correctOption": "Carl XVI Gustaf",
     "date": "2022-12-30T11:09:50.966Z",
     "level": 1,
-    "subject": ["history"],
+    "subject": ["HIS"],
     "language": "English"
   },
   {
@@ -61,7 +61,7 @@
     "correctOption": "Stockholm",
     "date": "2022-12-30T11:09:50.966Z",
     "level": 2,
-    "subject": ["geography"],
+    "subject": ["GEO"],
     "language": "Swedish"
   },
   {
@@ -74,7 +74,7 @@
     "correctOption": "1523",
     "date": "2022-12-30T11:09:50.966Z",
     "level": 2,
-    "subject": ["history"],
+    "subject": ["HIS"],
     "language": "Swedish"
   },
   {
@@ -87,7 +87,7 @@
     "correctOption": "Stockholm",
     "date": "2022-12-30T11:09:50.966Z",
     "level": 2,
-    "subject": ["geography"],
+    "subject": ["GEO"],
     "language": "English"
   },
   {
@@ -100,7 +100,7 @@
     "correctOption": "1523",
     "date": "2022-12-30T11:09:50.966Z",
     "level": 2,
-    "subject": ["history"],
+    "subject": ["HIS"],
     "language": "English"
   },
   {
@@ -113,7 +113,7 @@
     "correctOption": "Krona",
     "date": "2022-12-30T11:09:50.966Z",
     "level": 3,
-    "subject": ["economics"],
+    "subject": ["ECO"],
     "language": "Swedish"
   },
   {
@@ -126,7 +126,7 @@
     "correctOption": "Blå",
     "date": "2022-12-30T11:09:50.966Z",
     "level": 3,
-    "subject": ["history"],
+    "subject": ["HIS"],
     "language": "Swedish"
   },
   {
@@ -139,7 +139,7 @@
     "correctOption": "Krona",
     "date": "2022-12-30T11:09:50.966Z",
     "level": 3,
-    "subject": ["economics"],
+    "subject": ["ECO"],
     "language": "English"
   },
   {
@@ -152,7 +152,7 @@
     "correctOption": "Blue",
     "date": "2022-12-30T11:09:50.966Z",
     "level": 3,
-    "subject": ["history"],
+    "subject": ["HIS"],
     "language": "English"
   },
   {
@@ -165,7 +165,7 @@
     "correctOption": "Kebnekaise",
     "date": "2022-12-30T11:09:50.966Z",
     "level": 4,
-    "subject": ["geography"],
+    "subject": ["GEO"],
     "language": "English"
   },
   {
@@ -178,7 +178,7 @@
     "correctOption": "Vänern",
     "date": "2022-12-30T11:09:50.966Z",
     "level": 4,
-    "subject": ["geography"],
+    "subject": ["GEO"],
     "language": "English"
   },
   {
@@ -191,7 +191,7 @@
     "correctOption": "Kebnekaise",
     "date": "2022-12-30T11:09:50.966Z",
     "level": 4,
-    "subject": ["geography"],
+    "subject": ["GEO"],
     "language": "Swedish"
   },
   {
@@ -204,7 +204,7 @@
     "correctOption": "Vänern",
     "date": "2022-12-30T11:09:50.966Z",
     "level": 4,
-    "subject": ["geography"],
+    "subject": ["GEO"],
     "language": "Swedish"
   }
 ]
