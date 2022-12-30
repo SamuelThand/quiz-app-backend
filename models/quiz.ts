@@ -1,16 +1,26 @@
 import { model, Model, Schema } from 'mongoose';
+import { Question } from './question';
+import { Admin } from './admin';
 
 interface IQuiz {
   creator: string;
   name: string;
   questions: string[];
-  level: Number;
+  level: number;
   date: Date;
 }
 
 interface IQuizMethods {}
 
-interface QuizModel extends Model<IQuiz, {}, IQuizMethods> {}
+interface QuizModel extends Model<IQuiz, {}, IQuizMethods> {
+  getQuizzes(): Promise<IQuiz[]>;
+  getQuiz(name: string): Promise<IQuiz>;
+  getQuizzesByCreator(creator: string): Promise<IQuiz[]>;
+  addQuiz(quiz: IQuiz): Promise<IQuiz>;
+  updateQuiz(quiz: IQuiz): Promise<IQuiz>;
+  deleteQuizByName(name: string): Promise<IQuiz>;
+  deleteQuizById(id: string): Promise<IQuiz>;
+}
 
 const quizSchema = new Schema<IQuiz, QuizModel, IQuizMethods>({
   creator: {
@@ -29,7 +39,7 @@ const quizSchema = new Schema<IQuiz, QuizModel, IQuizMethods>({
     }
   ],
   level: Number,
-  date: Date
+  date: { type: Date, default: Date.now }
 });
 
-export const quizModel = model<IQuiz, QuizModel>('quiz', quizSchema);
+export const Quiz = model<IQuiz, QuizModel>('quiz', quizSchema);

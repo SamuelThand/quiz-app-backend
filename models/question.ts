@@ -1,4 +1,6 @@
 import { model, Model, Schema, Query } from 'mongoose';
+import { Subject } from './subject';
+import { Admin } from './admin';
 
 // TODO: Enter valid scheme
 // TODO: Export interfaces needed for routes
@@ -33,7 +35,7 @@ interface QuestionModel extends Model<IQuestion, {}, IQuestionMethods> {
 }
 
 const questionSchema = new Schema<IQuestion, QuestionModel, IQuestionMethods>({
-  creator: { type: String, required: true },
+  creator: { type: String, required: true, ref: 'admins' },
   name: { type: String, required: true },
   question: String,
   option1: String,
@@ -56,8 +58,6 @@ const questionSchema = new Schema<IQuestion, QuestionModel, IQuestionMethods>({
 questionSchema.static('getQuestions', function () {
   return this.find({});
 });
-
-// TODO: Possibly return multiple questions by name?
 
 /**
  * Get question by id
