@@ -38,10 +38,12 @@ subjectSchema.static('getSubject', function (subjectCode: string) {
 });
 
 subjectSchema.static('addSubject', async function (subject: ISubject) {
-  if (await this.findOne({ subjectCode: subject.subjectCode })) {
+  try {
+    return await this.create(subject);
+  } catch (error) {
+    console.log(error);
     return null;
   }
-  return this.create(subject);
 });
 
 subjectSchema.static('updateSubject', function (subject: ISubject) {
