@@ -1,0 +1,17 @@
+[
+  {
+    "name": "economics",
+    "subjectCode": "ECO",
+    "description": "Economics is the social science that studies the production, distribution, and consumption of goods and services."
+  },
+  {
+    "name": "geography",
+    "subjectCode": "GEO",
+    "description": "Geography is the study of the lands, the features, the inhabitants, and the phenomena of Earth."
+  },
+  {
+    "name": "history",
+    "subjectCode": "HIS",
+    "description": "History is the study of change over time, and it covers all aspects of human society. Political, social, economic, scientific, technological, medical, cultural, intellectual, religious and military developments are all part of history."
+  }
+]
