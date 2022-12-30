@@ -19,8 +19,10 @@ interface IQuestion {
 
 interface IQuestionMethods {}
 
+/**
+ * Question model interface
+ */
 interface QuestionModel extends Model<IQuestion, {}, IQuestionMethods> {
-  //  TODO är detta rätt return type? Eller ska det vara ett Query<> objekt?
   getQuestions(): Promise<IQuestion[]>;
   getQuestion(name: string): Promise<IQuestion>;
   getQuestionsByCreator(creator: string): Promise<IQuestion[]>;
@@ -91,8 +93,7 @@ questionSchema.static(
  * @returns {Promise<IQuestion>} Promise of the added question
  */
 questionSchema.static('addQuestion', async function (question: IQuestion) {
-  const newQuestion = new Question(question);
-  return newQuestion.save();
+  return this.create(question);
 });
 
 questionSchema.static('updateQuestion', async function (question: IQuestion) {
