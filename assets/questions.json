@@ -7,7 +7,7 @@
     "optionX": "Göteborg",
     "option2": "Malmö",
     "correctOption": "Stockholm",
-    "date": "2022-01-01T00:00:00.000Z",
+    "date": "2022-12-30T11:09:50.966Z",
     "level": 1,
     "subject": ["geography"],
     "language": "Swedish"
@@ -20,7 +20,7 @@
     "optionX": "Carl XV",
     "option2": "Gustaf VI Adolf",
     "correctOption": "Carl XVI Gustaf",
-    "date": "2022-01-01T00:00:00.000Z",
+    "date": "2022-12-30T11:09:50.966Z",
     "level": 1,
     "subject": ["history"],
     "language": "Swedish"
@@ -33,7 +33,7 @@
     "optionX": "Gothenburg",
     "option2": "Malmö",
     "correctOption": "Stockholm",
-    "date": "2022-01-01T00:00:00.000Z",
+    "date": "2022-12-30T11:09:50.966Z",
     "level": 1,
     "subject": ["geography"],
     "language": "English"
@@ -46,7 +46,7 @@
     "optionX": "Carl XV",
     "option2": "Gustaf VI Adolf",
     "correctOption": "Carl XVI Gustaf",
-    "date": "2022-01-01T00:00:00.000Z",
+    "date": "2022-12-30T11:09:50.966Z",
     "level": 1,
     "subject": ["history"],
     "language": "English"
@@ -59,7 +59,7 @@
     "optionX": "Göteborg",
     "option2": "Malmö",
     "correctOption": "Stockholm",
-    "date": "2022-01-01T00:00:00.000Z",
+    "date": "2022-12-30T11:09:50.966Z",
     "level": 2,
     "subject": ["geography"],
     "language": "Swedish"
@@ -72,7 +72,7 @@
     "optionX": "1814",
     "option2": "1905",
     "correctOption": "1523",
-    "date": "2022-01-01T00:00:00.000Z",
+    "date": "2022-12-30T11:09:50.966Z",
     "level": 2,
     "subject": ["history"],
     "language": "Swedish"
@@ -85,7 +85,7 @@
     "optionX": "Gothenburg",
     "option2": "Malmö",
     "correctOption": "Stockholm",
-    "date": "2022-01-01T00:00:00.000Z",
+    "date": "2022-12-30T11:09:50.966Z",
     "level": 2,
     "subject": ["geography"],
     "language": "English"
@@ -98,7 +98,7 @@
     "optionX": "1814",
     "option2": "1905",
     "correctOption": "1523",
-    "date": "2022-01-01T00:00:00.000Z",
+    "date": "2022-12-30T11:09:50.966Z",
     "level": 2,
     "subject": ["history"],
     "language": "English"
@@ -111,7 +111,7 @@
     "optionX": "Krona",
     "option2": "Dollar",
     "correctOption": "Krona",
-    "date": "2022-01-01T00:00:00.000Z",
+    "date": "2022-12-30T11:09:50.966Z",
     "level": 3,
     "subject": ["economics"],
     "language": "Swedish"
@@ -124,7 +124,7 @@
     "optionX": "Blå",
     "option2": "Gul",
     "correctOption": "Blå",
-    "date": "2022-01-01T00:00:00.000Z",
+    "date": "2022-12-30T11:09:50.966Z",
     "level": 3,
     "subject": ["history"],
     "language": "Swedish"
@@ -137,7 +137,7 @@
     "optionX": "Krona",
     "option2": "Dollar",
     "correctOption": "Krona",
-    "date": "2022-01-01T00:00:00.000Z",
+    "date": "2022-12-30T11:09:50.966Z",
     "level": 3,
     "subject": ["economics"],
     "language": "English"
@@ -150,7 +150,7 @@
     "optionX": "Blue",
     "option2": "Yellow",
     "correctOption": "Blue",
-    "date": "2022-01-01T00:00:00.000Z",
+    "date": "2022-12-30T11:09:50.966Z",
     "level": 3,
     "subject": ["history"],
     "language": "English"
@@ -163,7 +163,7 @@
     "optionX": "Halti",
     "option2": "Galdhøpiggen",
     "correctOption": "Kebnekaise",
-    "date": "2022-01-01T00:00:00.000Z",
+    "date": "2022-12-30T11:09:50.966Z",
     "level": 4,
     "subject": ["geography"],
     "language": "English"
@@ -176,7 +176,7 @@
     "optionX": "Vänern",
     "option2": "Mälaren",
     "correctOption": "Vänern",
-    "date": "2022-01-01T00:00:00.000Z",
+    "date": "2022-12-30T11:09:50.966Z",
     "level": 4,
     "subject": ["geography"],
     "language": "English"
@@ -189,7 +189,7 @@
     "optionX": "Halti",
     "option2": "Galdhøpiggen",
     "correctOption": "Kebnekaise",
-    "date": "2022-01-01T00:00:00.000Z",
+    "date": "2022-12-30T11:09:50.966Z",
     "level": 4,
     "subject": ["geography"],
     "language": "Swedish"
@@ -202,7 +202,7 @@
     "optionX": "Vänern",
     "option2": "Mälaren",
     "correctOption": "Vänern",
-    "date": "2022-01-01T00:00:00.000Z",
+    "date": "2022-12-30T11:09:50.966Z",
     "level": 4,
     "subject": ["geography"],
     "language": "Swedish"
