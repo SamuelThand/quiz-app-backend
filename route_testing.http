@@ -180,3 +180,46 @@ Content-Type: application/json
 DELETE {{url}}/quizzes/QuizTest
 
 ###############################################
+###############################################
+
+// Test: Get admins
+// Expected HTTP response status code: 200 OR 404 if no admins
+// Expected response: an object (json) with an array with all admins
+// [{}, {}, ...]
+GET {{url}}/admins
+
+###############################################
+
+// Test: Get admin by username
+// Expected HTTP response status code: 200
+// Expected response: an object (json)
+GET {{url}}/admins/Admin
+
+###############################################
+
+// Test: Get admin by not existing admin
+// Expected HTTP response status code: 404
+// Expected response: message that the admin was not found
+GET {{url}}/admins/non
+
+###############################################
+
+// Test: Add admin
+// Expected HTTP response status code: 201 OR 409
+// Expected response: recently added admin
+POST {{url}}/admins HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstName": "Test",
+  "lastName": "Testsson",
+  "userName": "TestAdmin",
+  "password": "Test123"
+}
+
+###############################################
+
+// Test: Delete subject
+// Expected HTTP response status code: 200 OR 404
+// Expected response: an object (json) with a subject of economics
+DELETE {{url}}/admins/TestAdmin

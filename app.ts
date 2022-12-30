@@ -9,6 +9,7 @@ import mongoose from 'mongoose';
 import questionsRoutes from './routes/questions';
 import subjectRoutes from './routes/subjects';
 import quizzesRoutes from './routes/quizzes';
+import adminRoutes from './routes/admins';
 
 //  for testing
 import { courseModel } from './models/testing';
@@ -57,6 +58,7 @@ app.get('/testing', (req, res) => {
 app.use('/questions', questionsRoutes);
 app.use('/subjects', subjectRoutes);
 app.use('/quizzes', quizzesRoutes);
+app.use('/admins', adminRoutes);
 
 mongoose
   .connect(process.env.DB_SERVER!)
