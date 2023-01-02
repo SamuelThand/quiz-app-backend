@@ -36,16 +36,16 @@ interface QuestionModel extends Model<IQuestion, {}, IQuestionMethods> {
 
 const questionSchema = new Schema<IQuestion, QuestionModel, IQuestionMethods>({
   creator: { type: String, required: true, ref: 'admins' },
-  name: { type: String, required: true },
-  question: String,
-  option1: String,
-  optionX: String,
-  option2: String,
-  correctOption: String, // Referera till en option ovan
+  name: { type: String, required: true, minlength: 4, unique: true },
+  question: { type: String, required: true },
+  option1: { type: String, required: true },
+  optionX: { type: String, required: true },
+  option2: { type: String, required: true },
+  correctOption: { type: String, required: true },
   date: { type: Date, default: Date.now },
-  level: Number,
-  subject: [{ type: String, ref: 'subjects' }],
-  language: String
+  level: { type: Number, required: true, min: 1, max: 3 },
+  subject: { type: String, required: true, ref: 'subjects' },
+  language: { type: String, required: true }
 });
 
 // Statics (Model functions)
