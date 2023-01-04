@@ -3,9 +3,9 @@ import { Question } from './question';
 import { Admin } from './admin';
 
 interface IQuiz {
-  creator: string;
+  creator: Schema.Types.ObjectId;
   name: string;
-  questions: string[];
+  questions: Schema.Types.ObjectId[];
   level: number;
   date: Date;
 }
@@ -23,9 +23,12 @@ interface QuizModel extends Model<IQuiz, {}, IQuizMethods> {
 }
 
 const quizSchema = new Schema<IQuiz, QuizModel, IQuizMethods>({
+  // TODO Problem med att posta en quiz med creator, för att man måste ha ett _ID som refererar till ett
+  // admin dokument creator, hämta det _id:t och ange det när man postar frågan i frontend
   creator: {
-    type: String,
-    ref: 'admins',
+    type: Schema.Types.ObjectId,
+    ref: 'admin',
+    // type: String,
     required: true
   },
   name: {
@@ -34,8 +37,8 @@ const quizSchema = new Schema<IQuiz, QuizModel, IQuizMethods>({
   },
   questions: [
     {
-      type: String,
-      ref: 'questions'
+      type: Schema.Types.ObjectId,
+      ref: 'question'
     }
   ],
   level: Number,

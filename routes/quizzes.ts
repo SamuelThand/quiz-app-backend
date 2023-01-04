@@ -1,3 +1,4 @@
+import console from 'console';
 import Express from 'express';
 import { Quiz } from '../models/quiz';
 
@@ -44,7 +45,9 @@ quizzesRoutes.get(
 // );
 
 quizzesRoutes.post('/', function (req: Express.Request, res: Express.Response) {
+  console.log(req.body); // TODO loggar
   const newQuiz = new Quiz(req.body);
+  console.log(newQuiz); // TODO loggar
   Quiz.addQuiz(newQuiz).then((result) => {
     if (!result) {
       res.status(400).json({ message: 'Quiz not added' });
