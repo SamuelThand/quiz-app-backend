@@ -90,8 +90,15 @@ questionSchema.static('getQuestionsByCreator', function (creator: string) {
  * @param {IQuestion} question - Question object
  * @returns {Promise<IQuestion>} Promise of the added question
  */
-questionSchema.static('addQuestion', function (question: IQuestion) {
-  return this.create(question);
+questionSchema.static('addQuestion', async function (question: IQuestion) {
+  console.log(question);
+  try {
+    return await this.create(question);
+  } catch (error: any) {
+    console.log(error);
+
+    return null;
+  }
 });
 
 /**
