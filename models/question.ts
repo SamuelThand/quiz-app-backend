@@ -6,7 +6,7 @@ import { Admin } from './admin';
 // TODO: Export interfaces needed for routes
 
 interface IQuestion {
-  creator: string;
+  creator: Schema.Types.ObjectId;
   name: string;
   question: string;
   option1: string;
@@ -15,7 +15,7 @@ interface IQuestion {
   correctOption: string;
   date: Date;
   level: number;
-  subject: string;
+  subject: Schema.Types.ObjectId;
   language: string;
 }
 
@@ -35,7 +35,7 @@ interface QuestionModel extends Model<IQuestion, {}, IQuestionMethods> {
 }
 
 const questionSchema = new Schema<IQuestion, QuestionModel, IQuestionMethods>({
-  creator: { type: String, required: true, ref: 'admins' },
+  creator: { type: Schema.Types.ObjectId, required: true, ref: 'admin' },
   name: { type: String, required: true, minlength: 4, unique: true },
   question: { type: String, required: true },
   option1: { type: String, required: true },
@@ -44,7 +44,7 @@ const questionSchema = new Schema<IQuestion, QuestionModel, IQuestionMethods>({
   correctOption: { type: String, required: true },
   date: { type: Date, default: Date.now },
   level: { type: Number, required: true, min: 1, max: 3 },
-  subject: { type: String, required: true, ref: 'subjects' },
+  subject: { type: Schema.Types.ObjectId, required: true, ref: 'subject' },
   language: { type: String, required: true }
 });
 

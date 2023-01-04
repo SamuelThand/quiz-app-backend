@@ -3,9 +3,9 @@ import { Question } from './question';
 import { Admin } from './admin';
 
 interface IQuiz {
-  creator: string;
+  creator: Schema.Types.ObjectId;
   name: string;
-  questions: string[];
+  questions: Schema.Types.ObjectId[];
   level: number;
   date: Date;
 }
@@ -24,8 +24,8 @@ interface QuizModel extends Model<IQuiz, {}, IQuizMethods> {
 
 const quizSchema = new Schema<IQuiz, QuizModel, IQuizMethods>({
   creator: {
-    type: String,
-    ref: 'admins',
+    type: Schema.Types.ObjectId,
+    ref: 'admin',
     required: true
   },
   name: {
@@ -34,8 +34,8 @@ const quizSchema = new Schema<IQuiz, QuizModel, IQuizMethods>({
   },
   questions: [
     {
-      type: String,
-      ref: 'questions'
+      type: Schema.Types.ObjectId,
+      ref: 'question'
     }
   ],
   level: Number,
