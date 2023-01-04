@@ -8,7 +8,7 @@
     "build": "npx tsc",
     "start": "node dist/app.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/app.js\"",
-    "dev-debug": "concurrently \"npx tsc --watch\" \"nodemon -q dist/app.js --inspect\""
+    "dev-debug": "concurrently \"npx tsc --watch\" \"nodemon -q --inspect dist/app.js\""
   },
   "repository": {
     "type": "git",
