@@ -1,108 +1,119 @@
-import console from 'console';
 import Express from 'express';
+import { isValidObjectId } from 'mongoose';
 import { Quiz } from '../models/quiz';
 
 const quizzesRoutes = Express.Router();
 
+/**
+ * Get an array of all quizzes from the database.
+ *
+ * @route GET /quizzes
+ * @returns 200 - An array of quizzes or empty array if no quizzes found.
+ */
 quizzesRoutes.get('/', function (req: Express.Request, res: Express.Response) {
   Quiz.getQuizzes().then((result) => {
-    if (result.length === 0) {
-      res.status(404).json({ message: 'No quizzes found' });
-      return;
-    }
     res.status(200).json(result);
   });
 });
 
-// TODO: Remove one of name/code
-
+/**
+ * Get a quiz by id.
+ *
+ * @route GET /quizzes/:id
+ * @param id id of the quiz
+ * @returns 200 - The quiz, 404 - error, 400 - error
+ */
 quizzesRoutes.get(
-  '/:name',
-  function (req: Express.Request, res: Express.Response) {
-    const name = req.params.name;
-    Quiz.getQuiz(name).then((result) => {
-      if (!result) {
-        res.status(404).json({ message: 'Quiz not found' });
-        return;
-      }
-      res.status(200).json(result);
-    });
-  }
-);
-
-// quizzesRoutes.get(
-//   '/:id',
-//   function (req: Express.Request, res: Express.Response) {
-//     const id = req.params.id;
-//     Quiz.getQuiz(id).then((result) => {
-//       if (!result) {
-//         res.status(404).json({ message: 'Quiz not found' });
-//         return;
-//       }
-//       res.status(200).json(result);
-//     });
-//   }
-// );
-
-quizzesRoutes.post('/', function (req: Express.Request, res: Express.Response) {
-  console.log(req.body); // TODO loggar
-  const newQuiz = new Quiz(req.body);
-  console.log(newQuiz); // TODO loggar
-  Quiz.addQuiz(newQuiz).then((result) => {
-    if (!result) {
-      res.status(400).json({ message: 'Quiz not added' });
-      return;
-    }
-    res.status(201).json(result);
-  });
-});
-
-quizzesRoutes.put(
   '/:id',
   function (req: Express.Request, res: Express.Response) {
-    Quiz.getQuiz(req.params.id).then((quiz) => {
-      if (!quiz) {
-        res.status(404).json({ message: 'Quiz not found' });
-        return;
-      }
-      quiz.name = req.body.name;
-      quiz.questions = req.body.questions;
-      quiz.level = req.body.level;
-      Quiz.updateQuiz(quiz).then((result) => {
+    const id = req.params.id;
+    if (isValidObjectId(id)) {
+      Quiz.getQuiz(id).then((result) => {
         if (!result) {
-          res.status(400).json({ message: 'Quiz not updated' });
+          res.status(404).json({ error: 'Quiz with that id not found' });
           return;
         }
         res.status(200).json(result);
       });
-    });
+    } else {
+      res.status(400).json({ error: 'Invalid id format was sent' });
+    }
   }
 );
 
-quizzesRoutes.delete(
-  '/:name',
+/**
+ * Add a new Quiz.
+ *
+ * @route POST /quizzes
+ * @returns 201 - the new quiz, 400 - error
+ */
+quizzesRoutes.post('/', function (req: Express.Request, res: Express.Response) {
+  const newQuiz = new Quiz(req.body);
+
+  Quiz.addQuiz(newQuiz).then((result) => {
+    if (!result) {
+      res.status(400).json({ error: 'Quiz not added' });
+    } else {
+      res.status(201).json(result);
+    }
+  });
+});
+
+/**
+ * Update a Quiz.
+ *
+ * @route PUT /quizzes/:id
+ * @param id id of the Quiz to update
+ * @returns 200 - updated Quiz, 400 - error, 404 - error
+ */
+quizzesRoutes.put(
+  '/:id',
   function (req: Express.Request, res: Express.Response) {
-    Quiz.deleteQuizByName(req.params.name).then((result) => {
-      if (!result) {
-        res.status(404).json({ message: 'Quiz not found' });
-        return;
-      }
-      res.status(200).json(result);
-    });
+    const id = req.params.id;
+
+    if (isValidObjectId(id)) {
+      Quiz.getQuiz(id).then((quiz) => {
+        if (!quiz) {
+          res.status(404).json({ error: 'Quiz not found' });
+          return;
+        }
+        quiz.name = req.body.name;
+        quiz.questions = req.body.questions;
+        quiz.level = req.body.level;
+        Quiz.updateQuiz(id, quiz).then((result) => {
+          res.status(200).json(result);
+        });
+      });
+    } else {
+      res.status(400).json({ error: 'Invalid id format was sent' });
+    }
   }
 );
 
-// quizzesRoutes.delete(
-//   '/:id',
-//   function (req: Express.Request, res: Express.Response) {
-//     Quiz.deleteQuizById(req.params.id).then((result) => {
-//       if (!result) {
-//         res.status(404).json({ message: 'Quiz not found' });
-//         return;
-//       }
-//       res.status(200).json(result);
-//     });
-//   }
-// );
+/**
+ * Deleta a Quiz.
+ *
+ * @route DELETE /quizzes/:id
+ * @param id id of the Quiz
+ * @returns 200 - deleted Quiz, 404 - error, 400 - error
+ */
+quizzesRoutes.delete(
+  '/:id',
+  function (req: Express.Request, res: Express.Response) {
+    const id = req.params.id;
+
+    if (isValidObjectId(id)) {
+      Quiz.deleteQuizById(req.params.id).then((result) => {
+        if (!result) {
+          res.status(404).json({ error: 'Quiz not found' });
+          return;
+        }
+        res.status(200).json(result);
+      });
+    } else {
+      res.status(400).json({ error: 'Invalid id format was sent' });
+    }
+  }
+);
 
 export default quizzesRoutes;
