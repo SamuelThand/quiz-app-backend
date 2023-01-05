@@ -16,6 +16,7 @@ quizzesRoutes.get('/', function (req: Express.Request, res: Express.Response) {
   });
 });
 
+// TODO populera alla questions
 /**
  * Get a quiz by id.
  *

@@ -58,13 +58,13 @@ quizSchema.static('getQuizzes', function () {
 });
 
 /**
- * Get quiz by id.
+ * Get quiz by id, with its questions.
  *
  * @param {string} id id of the quiz
  * @returns {Promise<IQuiz>} Promise of the quiz
  */
 quizSchema.static('getQuiz', function (id: string) {
-  return this.findById(id);
+  return this.findById(id).populate('questions');
 });
 
 /**
