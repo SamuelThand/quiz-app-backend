@@ -51,11 +51,14 @@ questionsRoutes.post(
   '/',
   function (req: Express.Request, res: Express.Response) {
     const newQuestion = new Question(req.body);
+
+    // Validate the model with the given properties
+    const error = newQuestion.validateSync();
+    if (error) {
+      res.status(400).json({ error: error.message });
+      return;
+    }
     Question.addQuestion(newQuestion).then((result) => {
-      if (!result) {
-        res.status(400).json({ error: 'Question not added' });
-        return;
-      }
       res.status(201).json(result);
     });
   }
@@ -80,6 +83,7 @@ questionsRoutes.put(
         }
         body.name = oldQuestion.name;
         body.creator = oldQuestion.creator;
+        body.date = oldQuestion.date;
 
         Question.updateQuestion(id, body).then((newQuestion) => {
           res.status(200).json(newQuestion);
@@ -92,9 +96,9 @@ questionsRoutes.put(
 );
 
 /**
- * Delete a question by name
+ * Delete a question by id
  *
- * @route DELETE /questions/:name
+ * @route DELETE /questions/:id
  */
 questionsRoutes.delete(
   '/:id',

@@ -50,12 +50,14 @@ quizzesRoutes.get(
 quizzesRoutes.post('/', function (req: Express.Request, res: Express.Response) {
   const newQuiz = new Quiz(req.body);
 
+  // Validate the model with the given properties
+  const error = newQuiz.validateSync();
+  if (error) {
+    res.status(400).json({ error: error.message });
+    return;
+  }
   Quiz.addQuiz(newQuiz).then((result) => {
-    if (!result) {
-      res.status(400).json({ error: 'Quiz not added' });
-    } else {
-      res.status(201).json(result);
-    }
+    res.status(201).json(result);
   });
 });
 
