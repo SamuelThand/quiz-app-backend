@@ -29,7 +29,7 @@ interface QuestionModel extends Model<IQuestion, {}, IQuestionMethods> {
   getQuestion(name: string): Promise<IQuestion>;
   getQuestionsByCreator(creator: string): Promise<IQuestion[]>;
   addQuestion(question: IQuestion): Promise<IQuestion>;
-  updateQuestion(question: IQuestion): Promise<IQuestion>;
+  updateQuestion(id: string, newQuestion: IQuestion): Promise<IQuestion>;
   deleteQuestionByName(name: string): Promise<IQuestion>;
   deleteQuestionById(id: string): Promise<IQuestion>;
 }
@@ -91,14 +91,7 @@ questionSchema.static('getQuestionsByCreator', function (creator: string) {
  * @returns {Promise<IQuestion>} Promise of the added question
  */
 questionSchema.static('addQuestion', async function (question: IQuestion) {
-  console.log(question);
-  try {
-    return await this.create(question);
-  } catch (error: any) {
-    console.log(error);
-
-    return null;
-  }
+  return this.create(question);
 });
 
 /**
@@ -106,9 +99,12 @@ questionSchema.static('addQuestion', async function (question: IQuestion) {
  * @param {IQuestion} question - IQuestion object
  * @returns {Promise<IQuestion>} Promise of the updated question
  */
-questionSchema.static('updateQuestion', function (question: IQuestion) {
-  // TODO: Implement this
-});
+questionSchema.static(
+  'updateQuestion',
+  function (id: string, newQuestion: IQuestion) {
+    return this.findByIdAndUpdate(id, newQuestion, { new: true });
+  }
+);
 
 /**
  * Delete a question by name

@@ -1,4 +1,5 @@
 import Express from 'express';
+import { isValidObjectId } from 'mongoose';
 import { Question } from '../models/question';
 
 const questionsRoutes = Express.Router();
@@ -12,10 +13,6 @@ questionsRoutes.get(
   '/',
   function (req: Express.Request, res: Express.Response) {
     Question.getQuestions().then((result) => {
-      if (result.length === 0) {
-        res.status(404).json({ message: 'No questions found' });
-        return;
-      }
       res.status(200).json(result);
     });
   }
@@ -30,14 +27,18 @@ questionsRoutes.get(
   '/:id',
   function (req: Express.Request, res: Express.Response) {
     const id = req.params.id;
-    console.log(id);
-    Question.getQuestion(id).then((result) => {
-      if (!result) {
-        res.status(404).json({ message: 'Question not found' });
-        return;
-      }
-      res.status(200).json(result);
-    });
+
+    if (isValidObjectId(id)) {
+      Question.getQuestion(id).then((result) => {
+        if (!result) {
+          res.status(404).json({ error: 'Question not found' });
+          return;
+        }
+        res.status(200).json(result);
+      });
+    } else {
+      res.status(400).json({ error: 'Invalid id format was sent' });
+    }
   }
 );
 
@@ -52,7 +53,7 @@ questionsRoutes.post(
     const newQuestion = new Question(req.body);
     Question.addQuestion(newQuestion).then((result) => {
       if (!result) {
-        res.status(400).json({ message: 'Question not added' });
+        res.status(400).json({ error: 'Question not added' });
         return;
       }
       res.status(201).json(result);
@@ -68,26 +69,27 @@ questionsRoutes.post(
 questionsRoutes.put(
   '/:id',
   function (req: Express.Request, res: Express.Response) {
-    Question.getQuestion(req.params.id).then((question) => {
-      if (!question) {
-        res.status(404).json({ message: 'Question not found' });
-        return;
-      }
-      question.name = req.body.name;
-      question.creator = req.body.creator;
-      question.language = req.body.language;
-      Question.updateQuestion(question).then((result) => {
-        if (!result) {
-          res.status(400).json({ message: 'Question not updated' });
+    const id = req.params.id;
+    const body = req.body;
+
+    if (isValidObjectId(id)) {
+      Question.getQuestion(req.params.id).then((oldQuestion) => {
+        if (!oldQuestion) {
+          res.status(404).json({ error: 'Question not found' });
           return;
         }
-        res.status(200).json(result);
+        body.name = oldQuestion.name;
+        body.creator = oldQuestion.creator;
+
+        Question.updateQuestion(id, body).then((newQuestion) => {
+          res.status(200).json(newQuestion);
+        });
       });
-    });
+    } else {
+      res.status(400).json({ error: 'Invalid id format was sent' });
+    }
   }
 );
-
-// TODO: Change to delete by id (deleteQuestionById()) when frontend is ready
 
 /**
  * Delete a question by name
@@ -95,15 +97,21 @@ questionsRoutes.put(
  * @route DELETE /questions/:name
  */
 questionsRoutes.delete(
-  '/:name',
+  '/:id',
   async function (req: Express.Request, res: Express.Response) {
-    Question.deleteQuestionByName(req.params.name).then((result) => {
-      if (!result) {
-        res.status(404).send('Question not found');
-      } else {
-        res.status(200).json(result);
-      }
-    });
+    const id = req.params.id;
+
+    if (isValidObjectId(id)) {
+      Question.deleteQuestionById(req.params.name).then((result) => {
+        if (!result) {
+          res.status(404).send('Question not found');
+        } else {
+          res.status(200).json(result);
+        }
+      });
+    } else {
+      res.status(400).json({ error: 'Invalid id format was sent' });
+    }
   }
 );
 
