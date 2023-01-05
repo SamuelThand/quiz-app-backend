@@ -54,7 +54,11 @@ const quizSchema = new Schema<IQuiz, QuizModel, IQuizMethods>({
  * @returns {Promise<IQuiz[]>} Promise of all quizzes
  */
 quizSchema.static('getQuizzes', function () {
-  return this.find({});
+  return this.find({}).populate('creator', [
+    'userName',
+    'firstName',
+    'lastName'
+  ]);
 });
 
 /**
