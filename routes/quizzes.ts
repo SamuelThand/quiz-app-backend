@@ -72,16 +72,16 @@ quizzesRoutes.put(
     const id = req.params.id;
 
     if (isValidObjectId(id)) {
-      Quiz.getQuiz(id).then((quiz) => {
-        if (!quiz) {
+      Quiz.getQuiz(id).then((oldQuiz) => {
+        if (!oldQuiz) {
           res.status(404).json({ error: 'Quiz not found' });
           return;
         }
-        quiz.name = req.body.name;
-        quiz.questions = req.body.questions;
-        quiz.level = req.body.level;
-        Quiz.updateQuiz(id, quiz).then((result) => {
-          res.status(200).json(result);
+        oldQuiz.name = req.body.name;
+        oldQuiz.questions = req.body.questions;
+        oldQuiz.level = req.body.level;
+        Quiz.updateQuiz(id, oldQuiz).then((newQuiz) => {
+          res.status(200).json(newQuiz);
         });
       });
     } else {
