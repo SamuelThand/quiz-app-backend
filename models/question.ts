@@ -30,13 +30,12 @@ interface QuestionModel extends Model<IQuestion, {}, IQuestionMethods> {
   getQuestionsByCreator(creator: string): Promise<IQuestion[]>;
   addQuestion(question: IQuestion): Promise<IQuestion>;
   updateQuestion(id: string, newQuestion: IQuestion): Promise<IQuestion>;
-  deleteQuestionByName(name: string): Promise<IQuestion>;
   deleteQuestionById(id: string): Promise<IQuestion>;
 }
 
 const questionSchema = new Schema<IQuestion, QuestionModel, IQuestionMethods>({
   creator: { type: Schema.Types.ObjectId, required: true, ref: 'admin' },
-  name: { type: String, required: true, minlength: 4, unique: true },
+  name: { type: String, required: true, minlength: 4 },
   question: { type: String, required: true },
   option1: { type: String, required: true },
   optionX: { type: String, required: true },
@@ -105,16 +104,6 @@ questionSchema.static(
     return this.findByIdAndUpdate(id, newQuestion, { new: true });
   }
 );
-
-/**
- * Delete a question by name
- *
- * @param {string} name - Name of question
- * @returns {Promise<IQuestion>} Promise of the deleted question
- */
-questionSchema.static('deleteQuestionByName', function (name: string) {
-  return this.findOneAndDelete({ name });
-});
 
 questionSchema.static('deleteQuestionById', function (id: string) {
   return this.findByIdAndDelete(id);
