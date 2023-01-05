@@ -148,9 +148,9 @@ GET {{url}}/quizzes/QuizTest
 ###############################################
 
 // Test: Get quiz by id
-// Expected HTTP response status code: 200 OR 404 if no quiz with that id
+// Expected HTTP response status code: 200 OR 404 - no quiz with that id OR 400 - Wrong id format
 // Expected response: an object (json) with a quiz
-GET {{url}}/quizzes/63ad827e9d82971b6593a00f
+GET {{url}}/quizzes/63b69c8e5bcbb25bac17dd95
 
 ###############################################
 
