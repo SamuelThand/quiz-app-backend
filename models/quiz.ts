@@ -17,8 +17,7 @@ interface QuizModel extends Model<IQuiz, {}, IQuizMethods> {
   getQuiz(name: string): Promise<IQuiz>;
   getQuizzesByCreator(creator: string): Promise<IQuiz[]>;
   addQuiz(quiz: IQuiz): Promise<IQuiz>;
-  updateQuiz(quiz: IQuiz): Promise<IQuiz>;
-  deleteQuizByName(name: string): Promise<IQuiz>;
+  updateQuiz(id: string, newQuiz: IQuiz): Promise<IQuiz>;
   deleteQuizById(id: string): Promise<IQuiz>;
 }
 
@@ -47,6 +46,8 @@ const quizSchema = new Schema<IQuiz, QuizModel, IQuizMethods>({
 
 // Statics (Model functions)
 
+// TODO: Byt ut alla "id: String" till ObjectId om behovet finns.
+
 /**
  * Get all quizzes
  *
@@ -57,30 +58,52 @@ quizSchema.static('getQuizzes', function () {
 });
 
 /**
- * Get quiz by name
- * @param {string} name quiz name
- * @returns {Promise<IQuiz>} Promise of quiz
+ * Get quiz by id.
+ *
+ * @param {string} id id of the quiz
+ * @returns {Promise<IQuiz>} Promise of the quiz
  */
-quizSchema.static('getQuiz', function (name: string) {
-  return this.findOne({ name });
+quizSchema.static('getQuiz', function (id: string) {
+  return this.findById(id);
 });
 
+/**
+ * Get quizzes by creator.
+ *
+ * @param {string} creator id of the creator
+ * @returns {Promise<IQuiz[]>} Promise of the quizzes by the creator
+ */
 quizSchema.static('getQuizzesByCreator', function (creator: string) {
   return this.find({ creator });
 });
 
+/**
+ * Add a new quiz.
+ *
+ * @param {IQuiz} quiz quiz to add
+ * @returns {Promise<IQuiz>} Promise of the added quiz
+ */
 quizSchema.static('addQuiz', function (quiz: IQuiz) {
   return this.create(quiz);
 });
 
-quizSchema.static('updateQuiz', function (quiz: IQuiz) {
-  return this.findOneAndUpdate({ name: quiz.name }, quiz, { new: true });
+/**
+ * Update a quiz.
+ *
+ * @param {string} id id of the quiz to update
+ * @param {IQuiz} newQuiz new version of the quiz
+ * @returns {Promise<IQuiz>} Promise of the new quiz
+ */
+quizSchema.static('updateQuiz', function (id: string, newQuiz: IQuiz) {
+  return this.findByIdAndUpdate(id, newQuiz, { new: true });
 });
 
-quizSchema.static('deleteQuizByName', function (name: string) {
-  return this.findOneAndDelete({ name });
-});
-
+/**
+ * Delete a quiz.
+ *
+ * @param {string} id id of the quiz to delete
+ * @returns {Promise<IQuiz>} Promise of the deleted quiz
+ */
 quizSchema.static('deleteQuizById', function (id: string) {
   return this.findByIdAndDelete(id);
 });
