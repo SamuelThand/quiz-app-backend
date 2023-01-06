@@ -1,5 +1,5 @@
 // Include all needed modules
-import express, { Request, Response } from 'express';
+import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import mongoose from 'mongoose';
@@ -10,9 +10,6 @@ import questionsRoutes from './routes/questions';
 import subjectRoutes from './routes/subjects';
 import quizzesRoutes from './routes/quizzes';
 import adminRoutes from './routes/admins';
-
-//  for testing
-import { courseModel } from './models/testing';
 
 //  Configure DOTENV
 dotenv.config();
@@ -34,26 +31,7 @@ app.use(express.json());
 // for a JSON-like experience with URL-encoded.
 app.use(express.urlencoded({ extended: true }));
 
-//  TODO use routes
-
 //  TODO autentisering med express-session
-
-//  test routes
-
-app.get('/', (req: Request, res: Response) => {
-  res.send('Testing');
-});
-
-app.get('/testing', (req, res) => {
-  courseModel.find((error: any, course: any) => {
-    if (error) {
-      res.send(error);
-      return false;
-    }
-    res.json(course);
-    return true;
-  });
-});
 
 app.use('/questions', questionsRoutes);
 app.use('/subjects', subjectRoutes);
