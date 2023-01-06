@@ -55,7 +55,7 @@ const questionSchema = new Schema<IQuestion, QuestionModel, IQuestionMethods>({
  * @returns {Promise<IQuestion[]>} Promise of all questions
  */
 questionSchema.static('getQuestions', function () {
-  return this.find({});
+  return this.find({}).populate('subject', 'name');
 });
 
 /**
