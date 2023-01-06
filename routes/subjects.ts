@@ -3,6 +3,12 @@ import { Subject } from '../models/subject';
 
 const subjectRoutes = Express.Router();
 
+/**
+ * Get an array of all subjects from the database.
+ *
+ * @route GET /subjects
+ * @return 200 - The subjects, 404 - Not found
+ */
 subjectRoutes.get('/', function (req: Express.Request, res: Express.Response) {
   Subject.getSubjects().then((result) => {
     if (result.length === 0) {
@@ -13,6 +19,13 @@ subjectRoutes.get('/', function (req: Express.Request, res: Express.Response) {
   });
 });
 
+/**
+ * Get a subject by subjectcode.
+ *
+ * @route GET /subjects/:subjectCode
+ * @param subjectCode of the subject
+ * @return 200 - The subject, 404 - Not found
+ */
 subjectRoutes.get(
   '/:subjectCode',
   function (req: Express.Request, res: Express.Response) {
@@ -27,6 +40,12 @@ subjectRoutes.get(
   }
 );
 
+/**
+ * Add a new subject.
+ *
+ * @route POST /subjects
+ * @return 201 - The new subject, 409 - Conflict
+ */
 subjectRoutes.post('/', function (req: Express.Request, res: Express.Response) {
   const subject = req.body;
   Subject.addSubject(subject).then((result) => {
@@ -40,6 +59,12 @@ subjectRoutes.post('/', function (req: Express.Request, res: Express.Response) {
   });
 });
 
+/**
+ * Update a subject.
+ *
+ * @route PUT /subjects
+ * @return 200 - The subject, 404 - Not found
+ */
 subjectRoutes.put('/', function (req: Express.Request, res: Express.Response) {
   const subject = req.body;
   Subject.updateSubject(subject).then((result) => {
@@ -51,6 +76,13 @@ subjectRoutes.put('/', function (req: Express.Request, res: Express.Response) {
   });
 });
 
+/**
+ * Delete a subject by subjectCode.
+ *
+ * @route DELETE /subjects/:subjectCode
+ * @param subjectCode of the subject
+ * @return 200 - The deleted subject, 404 - Not found
+ */
 subjectRoutes.delete(
   '/:subjectCode',
   function (req: Express.Request, res: Express.Response) {

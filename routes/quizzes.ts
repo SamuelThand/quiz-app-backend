@@ -8,7 +8,7 @@ const quizzesRoutes = Express.Router();
  * Get an array of all quizzes from the database.
  *
  * @route GET /quizzes
- * @returns 200 - An array of quizzes or empty array if no quizzes found.
+ * @return 200 - An array of quizzes or empty array if no quizzes found.
  */
 quizzesRoutes.get('/', function (req: Express.Request, res: Express.Response) {
   Quiz.getQuizzes().then((result) => {
@@ -16,13 +16,12 @@ quizzesRoutes.get('/', function (req: Express.Request, res: Express.Response) {
   });
 });
 
-// TODO populera alla questions
 /**
  * Get a quiz by id.
  *
  * @route GET /quizzes/:id
- * @param id id of the quiz
- * @returns 200 - The quiz, 404 - error, 400 - error
+ * @param id of the quiz
+ * @return 200 - The quiz, 404 - Not found, 400 - Invalid
  */
 quizzesRoutes.get(
   '/:id',
@@ -46,12 +45,12 @@ quizzesRoutes.get(
  * Add a new Quiz.
  *
  * @route POST /quizzes
- * @returns 201 - the new quiz, 400 - error
+ * @return 201 - The new quiz, 400 - Error
  */
 quizzesRoutes.post('/', function (req: Express.Request, res: Express.Response) {
   const newQuiz = new Quiz(req.body);
 
-  // Validate the model with the given properties
+  // TODO Validate the model with the given properties
   const error = newQuiz.validateSync();
   if (error) {
     res.status(400).json({ error: error.message });
@@ -66,8 +65,8 @@ quizzesRoutes.post('/', function (req: Express.Request, res: Express.Response) {
  * Update a Quiz.
  *
  * @route PUT /quizzes/:id
- * @param id id of the Quiz to update
- * @returns 200 - updated Quiz, 400 - error, 404 - error
+ * @param id of the Quiz to update
+ * @return 200 - The updated quiz, 404 - Not found, 400 - Invalid
  */
 quizzesRoutes.put(
   '/:id',
@@ -94,11 +93,11 @@ quizzesRoutes.put(
 );
 
 /**
- * Deleta a Quiz.
+ * Delete a Quiz.
  *
  * @route DELETE /quizzes/:id
- * @param id id of the Quiz
- * @returns 200 - deleted Quiz, 404 - error, 400 - error
+ * @param id of the Quiz
+ * @return 200 - The deleted quiz, 404 - Not found, 400 - Invalid
  */
 quizzesRoutes.delete(
   '/:id',

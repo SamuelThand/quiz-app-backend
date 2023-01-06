@@ -1,7 +1,8 @@
 import { model, Model, Schema } from 'mongoose';
-import { Question } from './question';
-import { Admin } from './admin';
 
+/**
+ * Typescript interface for quiz objects, represents a document in MongoDB.
+ */
 interface IQuiz {
   creator: Schema.Types.ObjectId;
   name: string;
@@ -10,8 +11,14 @@ interface IQuiz {
   date: Date;
 }
 
+/**
+ * Interface for quiz instance methods.
+ */
 interface IQuizMethods {}
 
+/**
+ * Mongoose Model for quiz documents, contains definitions for Mongoose statics, instance and document methods.
+ */
 interface QuizModel extends Model<IQuiz, {}, IQuizMethods> {
   getQuizzes(): Promise<IQuiz[]>;
   getQuiz(name: string): Promise<IQuiz>;
@@ -21,13 +28,14 @@ interface QuizModel extends Model<IQuiz, {}, IQuizMethods> {
   deleteQuizById(id: string): Promise<IQuiz>;
 }
 
+/**
+ * Schema for quizzes, corresponds to the MongoDB document interface.
+ * Contains the Typescript IQuiz interface, QuizModel and IQuizMethods.
+ */
 const quizSchema = new Schema<IQuiz, QuizModel, IQuizMethods>({
-  // TODO Problem med att posta en quiz med creator, för att man måste ha ett _ID som refererar till ett
-  // admin dokument creator, hämta det _id:t och ange det när man postar frågan i frontend
   creator: {
     type: Schema.Types.ObjectId,
     ref: 'admin',
-    // type: String,
     required: true
   },
   name: {
@@ -46,10 +54,8 @@ const quizSchema = new Schema<IQuiz, QuizModel, IQuizMethods>({
 
 // Statics (Model functions)
 
-// TODO: Byt ut alla "id: String" till ObjectId om behovet finns.
-
 /**
- * Get all quizzes
+ * Get all quizzes with all info about their creator from MongoDB.
  *
  * @returns {Promise<IQuiz[]>} Promise of all quizzes
  */
@@ -62,9 +68,9 @@ quizSchema.static('getQuizzes', function () {
 });
 
 /**
- * Get quiz by id, with its questions.
+ * Get quiz by id with its questions by id from MongoDB.
  *
- * @param {string} id id of the quiz
+ * @param {string} id of the quiz
  * @returns {Promise<IQuiz>} Promise of the quiz
  */
 quizSchema.static('getQuiz', function (id: string) {
@@ -72,7 +78,7 @@ quizSchema.static('getQuiz', function (id: string) {
 });
 
 /**
- * Get quizzes by creator.
+ * Get quizzes by creator from MongoDB.
  *
  * @param {string} creator id of the creator
  * @returns {Promise<IQuiz[]>} Promise of the quizzes by the creator
@@ -82,9 +88,9 @@ quizSchema.static('getQuizzesByCreator', function (creator: string) {
 });
 
 /**
- * Add a new quiz.
+ * Add a quiz to MongoDB.
  *
- * @param {IQuiz} quiz quiz to add
+ * @param {IQuiz} quiz to add
  * @returns {Promise<IQuiz>} Promise of the added quiz
  */
 quizSchema.static('addQuiz', function (quiz: IQuiz) {
@@ -92,9 +98,9 @@ quizSchema.static('addQuiz', function (quiz: IQuiz) {
 });
 
 /**
- * Update a quiz.
+ * Update a quiz by id in MongoDB.
  *
- * @param {string} id id of the quiz to update
+ * @param {string} id of the quiz to update
  * @param {IQuiz} newQuiz new version of the quiz
  * @returns {Promise<IQuiz>} Promise of the new quiz
  */
@@ -103,7 +109,7 @@ quizSchema.static('updateQuiz', function (id: string, newQuiz: IQuiz) {
 });
 
 /**
- * Delete a quiz.
+ * Delete a quiz by id in MongoDB.
  *
  * @param {string} id id of the quiz to delete
  * @returns {Promise<IQuiz>} Promise of the deleted quiz
@@ -111,7 +117,5 @@ quizSchema.static('updateQuiz', function (id: string, newQuiz: IQuiz) {
 quizSchema.static('deleteQuizById', function (id: string) {
   return this.findByIdAndDelete(id);
 });
-
-// Methods (Document functions)
 
 export const Quiz = model<IQuiz, QuizModel>('quiz', quizSchema);

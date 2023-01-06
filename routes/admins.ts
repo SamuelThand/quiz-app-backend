@@ -5,6 +5,12 @@ const adminRoutes = Express.Router();
 
 // TODO: Make sure that passwords are hashed.
 
+/**
+ * Get an array of all admins from the database.
+ *
+ * @route GET /admins
+ * @returns 200 - The admins, 404 - Not found
+ */
 adminRoutes.get('/', function (req: Express.Request, res: Express.Response) {
   Admin.getAdmins().then((result) => {
     if (result.length === 0) {
@@ -15,6 +21,13 @@ adminRoutes.get('/', function (req: Express.Request, res: Express.Response) {
   });
 });
 
+/**
+ * Get an admin by username.
+ *
+ * @route GET /admins/:username
+ * @param username of the admin
+ * @return 200 - The admin, 404 - Not found
+ */
 adminRoutes.get(
   '/:username',
   function (req: Express.Request, res: Express.Response) {
@@ -29,6 +42,12 @@ adminRoutes.get(
   }
 );
 
+/**
+ * Add a new admin.
+ *
+ * @route POST /admins
+ * @return 201 - The new admin, 400 - Error
+ */
 adminRoutes.post('/', function (req: Express.Request, res: Express.Response) {
   const newAdmin = new Admin(req.body);
   Admin.addAdmin(newAdmin).then((result) => {
@@ -40,6 +59,13 @@ adminRoutes.post('/', function (req: Express.Request, res: Express.Response) {
   });
 });
 
+/**
+ * Update an admin.
+ *
+ * @route PUT /admins/:username
+ * @param username of the admin to update
+ * @return 200 - The updated question, 404 - Not found, 400 - Error
+ */
 adminRoutes.put(
   '/:username',
   function (req: Express.Request, res: Express.Response) {
@@ -61,6 +87,13 @@ adminRoutes.put(
   }
 );
 
+/**
+ * Delete an admin by username
+ *
+ * @route DELETE /admins/:id
+ * @param username of the admin
+ * @return 200 - The deleted admin, 404 - Not found
+ */
 adminRoutes.delete(
   '/:username',
   function (req: Express.Request, res: Express.Response) {

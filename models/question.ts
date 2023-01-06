@@ -1,10 +1,8 @@
-import { model, Model, Schema, Query } from 'mongoose';
-import { Subject } from './subject';
-import { Admin } from './admin';
+import { model, Model, Schema } from 'mongoose';
 
-// TODO: Enter valid scheme
-// TODO: Export interfaces needed for routes
-
+/**
+ * Typescript interface for question objects, represents a document in MongoDB.
+ */
 interface IQuestion {
   creator: Schema.Types.ObjectId;
   name: string;
@@ -19,10 +17,13 @@ interface IQuestion {
   language: string;
 }
 
+/**
+ * Interface for question instance methods.
+ */
 interface IQuestionMethods {}
 
 /**
- * Question model interface
+ * Mongoose Model for question documents, contains definitions for Mongoose statics, instance and document methods.
  */
 interface QuestionModel extends Model<IQuestion, {}, IQuestionMethods> {
   getQuestions(): Promise<IQuestion[]>;
@@ -33,6 +34,10 @@ interface QuestionModel extends Model<IQuestion, {}, IQuestionMethods> {
   deleteQuestionById(id: string): Promise<IQuestion>;
 }
 
+/**
+ * Schema for questions, corresponds to the MongoDB document interface.
+ * Contains the Typescript IQuiz interface, QuizModel and IQuizMethods.
+ */
 const questionSchema = new Schema<IQuestion, QuestionModel, IQuestionMethods>({
   creator: { type: Schema.Types.ObjectId, required: true, ref: 'admin' },
   name: { type: String, required: true, minlength: 4 },
@@ -50,7 +55,7 @@ const questionSchema = new Schema<IQuestion, QuestionModel, IQuestionMethods>({
 // Statics (Model functions)
 
 /**
- * Get all questions
+ * Get all questions from MongoDB.
  *
  * @returns {Promise<IQuestion[]>} Promise of all questions
  */
@@ -59,10 +64,10 @@ questionSchema.static('getQuestions', function () {
 });
 
 /**
- * Get question by id
+ * Get question by id from MongoDB.
  *
- * @param {string} id - Id of question
- * @returns {Promise<IQuestion>} Promise of question
+ * @param {string} id of the question
+ * @returns {Promise<IQuestion>} Promise of the question
  */
 questionSchema.static('getQuestion', function (id: string) {
   try {
@@ -74,19 +79,19 @@ questionSchema.static('getQuestion', function (id: string) {
 });
 
 /**
- * Get all questions by a specific creator
+ * Get all questions by creator from MongoDB.
  *
- * @param {string} creator - name of creator
- * @returns {Promise<IQuestion[]>} Promise of all questions by the creator
+ * @param {string} creator id of creator
+ * @returns {Promise<IQuestion[]>} Promise of the questions by the creator
  */
 questionSchema.static('getQuestionsByCreator', function (creator: string) {
   return this.find({ creator });
 });
 
 /**
- * Add a new question by sentding a question object
+ * Add a question to MongoDB.
  *
- * @param {IQuestion} question - Question object
+ * @param {IQuestion} question to add
  * @returns {Promise<IQuestion>} Promise of the added question
  */
 questionSchema.static('addQuestion', async function (question: IQuestion) {
@@ -94,8 +99,9 @@ questionSchema.static('addQuestion', async function (question: IQuestion) {
 });
 
 /**
- * Update a question by sending a question object
- * @param {IQuestion} question - IQuestion object
+ * Update a question in MongoDB.
+ *
+ * @param {IQuestion} question to update
  * @returns {Promise<IQuestion>} Promise of the updated question
  */
 questionSchema.static(
@@ -105,11 +111,15 @@ questionSchema.static(
   }
 );
 
+/**
+ * Delete a question by id in MongoDB.
+ *
+ * @param {string} id of the question to delete
+ * @returns {Promise<IQuestion>} Promise of the deleted quiz
+ */
 questionSchema.static('deleteQuestionById', function (id: string) {
   return this.findByIdAndDelete(id);
 });
-
-// Methods (Document functions)
 
 export const Question = model<IQuestion, QuestionModel>(
   'question',

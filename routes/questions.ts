@@ -5,7 +5,7 @@ import { Question } from '../models/question';
 const questionsRoutes = Express.Router();
 
 /**
- * Get all questions
+ * Get an array of all questions from the database.
  *
  * @route GET /questions
  */
@@ -19,9 +19,11 @@ questionsRoutes.get(
 );
 
 /**
- * Get question by id
+ * Get question by id.
  *
  * @route GET /questions/:id
+ * @param id of the question
+ * @return 200 - The question, 404 - Not found, 400 - Invalid
  */
 questionsRoutes.get(
   '/:id',
@@ -46,6 +48,7 @@ questionsRoutes.get(
  * Add a new question
  *
  * @route POST /questions
+ * @return 201 - The new quiz, 400 - Error
  */
 questionsRoutes.post(
   '/',
@@ -65,9 +68,11 @@ questionsRoutes.post(
 );
 
 /**
- * Modify a question
+ * Update a question
  *
  * @route PUT /questions/:id
+ * @param id of the question to update
+ * @return 200 - The updated question, 404 - Not found, 400 - Invalid
  */
 questionsRoutes.put(
   '/:id',
@@ -99,6 +104,8 @@ questionsRoutes.put(
  * Delete a question by id
  *
  * @route DELETE /questions/:id
+ * @param id of the question
+ * @return 200 - The deleted question, 404 - Not found, 400 - Invalid
  */
 questionsRoutes.delete(
   '/:id',
