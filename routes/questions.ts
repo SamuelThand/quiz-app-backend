@@ -8,7 +8,7 @@ const questionsRoutes = Express.Router();
  * Get an array of all questions from the database.
  *
  * @route GET /questions
- * @return 200 - The quizzes
+ * @return 200 - The questions, 500 - Error
  */
 questionsRoutes.get(
   '/',

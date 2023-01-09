@@ -75,7 +75,7 @@ adminRoutes.post('/', function (req: Express.Request, res: Express.Response) {
  *
  * @route PUT /admins/:username
  * @param username of the admin to update
- * @return 200 - The updated question, 404 - Not found, 304 - Not Modified,
+ * @return 200 - The updated question, 404 - Not found, 304 - Not Modified, 500 - Error
  */
 adminRoutes.put(
   '/:username',
@@ -108,7 +108,7 @@ adminRoutes.put(
  *
  * @route DELETE /admins/:id
  * @param username of the admin
- * @return 202 - The deleted admin, 404 - Not found
+ * @return 202 - The deleted admin, 404 - Not found, 500 - Error
  */
 adminRoutes.delete(
   '/:username',
