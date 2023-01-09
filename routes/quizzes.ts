@@ -77,7 +77,7 @@ quizzesRoutes.post('/', function (req: Express.Request, res: Express.Response) {
  *
  * @route PUT /quizzes/:id
  * @param id of the Quiz to update
- * @return 200 - The updated quiz, 404 - Not found, 400 - Invalid
+ * @return 200 - The updated question, 404 - Not found, 400 - Invalid, 304 - Not modified, 500 - Error
  */
 quizzesRoutes.put(
   '/:id',
@@ -85,20 +85,29 @@ quizzesRoutes.put(
     const id = req.params.id;
 
     if (isValidObjectId(id)) {
-      Quiz.getQuiz(id).then((oldQuiz) => {
-        if (!oldQuiz) {
-          res.status(404).json({ error: 'Quiz not found' });
-          return;
-        }
-        oldQuiz.name = req.body.name;
-        oldQuiz.questions = req.body.questions;
-        oldQuiz.level = req.body.level;
-        Quiz.updateQuiz(id, oldQuiz).then((newQuiz) => {
-          res.status(200).json(newQuiz);
+      Quiz.getQuiz(id)
+        .then(async (oldQuiz) => {
+          if (!oldQuiz) {
+            res.status(404).json({ error: 'Quiz not found' });
+            return;
+          }
+          try {
+            oldQuiz.name = req.body.name;
+            oldQuiz.questions = req.body.questions;
+            oldQuiz.level = req.body.level;
+            const result = await Quiz.updateQuiz(id, oldQuiz);
+            result
+              ? res.status(200).json(result)
+              : res.status(304).json({ message: 'Quiz not updated' });
+          } catch (error: any) {
+            res.status(500).json({ message: error.message });
+          }
+        })
+        .catch((error) => {
+          res.status(500).json({ message: error.message });
         });
-      });
     } else {
-      res.status(400).json({ error: 'Invalid id format was sent' });
+      res.status(400).json({ error: 'Invalid quiz id' });
     }
   }
 );
@@ -108,7 +117,7 @@ quizzesRoutes.put(
  *
  * @route DELETE /quizzes/:id
  * @param id of the Quiz
- * @return 200 - The deleted quiz, 404 - Not found, 400 - Invalid
+ * @return 202 - The deleted quiz, 404 - Not found, 400 - Invalid, 500 - Error
  */
 quizzesRoutes.delete(
   '/:id',
@@ -116,13 +125,15 @@ quizzesRoutes.delete(
     const id = req.params.id;
 
     if (isValidObjectId(id)) {
-      Quiz.deleteQuizById(req.params.id).then((result) => {
-        if (!result) {
-          res.status(404).json({ error: 'Quiz not found' });
-          return;
-        }
-        res.status(200).json(result);
-      });
+      Quiz.deleteQuizById(req.params.id)
+        .then((result) => {
+          result
+            ? res.status(202).json(result)
+            : res.status(404).json({ message: 'Quiz not found' });
+        })
+        .catch((error) => {
+          res.status(500).json({ message: error.message });
+        });
     } else {
       res.status(400).json({ error: 'Invalid id format was sent' });
     }
