@@ -70,12 +70,7 @@ questionSchema.static('getQuestions', function () {
  * @returns {Promise<IQuestion>} Promise of the question
  */
 questionSchema.static('getQuestion', function (id: string) {
-  try {
-    return this.findById(id);
-  } catch (error: any) {
-    console.log(error);
-    return null;
-  }
+  return this.findById(id);
 });
 
 /**
