@@ -87,12 +87,7 @@ adminSchema.static('getAdminByUsername', function (userName: string) {
  * @returns {Promise<IAdmin>} Promise of the added admin
  */
 adminSchema.static('addAdmin', async function (admin: IAdmin) {
-  try {
-    return await this.create(admin);
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+  return await this.create(admin);
 });
 
 /**

@@ -9,16 +9,16 @@ const adminRoutes = Express.Router();
  * Get an array of all admins from the database.
  *
  * @route GET /admins
- * @returns 200 - The admins, 404 - Not found
+ * @returns 200 - The admins, 500 - Error
  */
 adminRoutes.get('/', function (req: Express.Request, res: Express.Response) {
-  Admin.getAdmins().then((result) => {
-    if (result.length === 0) {
-      res.status(404).json({ message: 'No admins found' });
-      return;
-    }
-    res.status(200).json(result);
-  });
+  Admin.getAdmins()
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((error) => {
+      res.status(500).json({ message: error.message });
+    });
 });
 
 /**
@@ -26,19 +26,21 @@ adminRoutes.get('/', function (req: Express.Request, res: Express.Response) {
  *
  * @route GET /admins/:username
  * @param username of the admin
- * @return 200 - The admin, 404 - Not found
+ * @return 200 - The admin, 404 - Not found, 500 - Error
  */
 adminRoutes.get(
   '/:username',
   function (req: Express.Request, res: Express.Response) {
     const username = req.params.username;
-    Admin.getAdminByUsername(username).then((result) => {
-      if (!result) {
-        res.status(404).json({ message: 'Admin not found' });
-        return;
-      }
-      res.status(200).json(result);
-    });
+    Admin.getAdminByUsername(username)
+      .then((result) => {
+        result
+          ? res.status(200).json(result)
+          : res.status(404).json({ message: 'Admin not found' });
+      })
+      .catch((error) => {
+        res.status(500).json({ message: error.message });
+      });
   }
 );
 
@@ -46,44 +48,58 @@ adminRoutes.get(
  * Add a new admin.
  *
  * @route POST /admins
- * @return 201 - The new admin, 400 - Error
+ * @return 201 - The new admin, 409 - Conflict, 400 - Invalid, 500 - Error
  */
 adminRoutes.post('/', function (req: Express.Request, res: Express.Response) {
   const newAdmin = new Admin(req.body);
-  Admin.addAdmin(newAdmin).then((result) => {
-    if (!result) {
-      res.status(400).json({ message: 'Admin not added' });
-      return;
-    }
-    res.status(201).json(result);
-  });
+  Admin.addAdmin(newAdmin)
+    .then((result) => {
+      res.status(201).json(result);
+    })
+    .catch((error) => {
+      if (error.name === 'MongoServerError' && error.code === 11000) {
+        res
+          .status(409)
+          .json({ message: 'An admin already exists with that username.' });
+      } else if (error.name === 'ValidationError') {
+        res.status(400).json({ message: 'New admin has an incorrect format' });
+      } else {
+        res.status(500).json({ message: error.message });
+      }
+    });
 });
 
+// TODO path breaks when trying to update immutable value _id
 /**
  * Update an admin.
  *
  * @route PUT /admins/:username
  * @param username of the admin to update
- * @return 200 - The updated question, 404 - Not found, 400 - Error
+ * @return 200 - The updated question, 404 - Not found, 304 - Not Modified,
  */
 adminRoutes.put(
   '/:username',
   function (req: Express.Request, res: Express.Response) {
-    Admin.getAdminByUsername(req.params.username).then((admin) => {
-      if (!admin) {
-        res.status(404).json({ message: 'Admin not found' });
-        return;
-      }
-      // TODO: Make sure the username doesn't change and the password is hashed
-      const updatedAdmin = new Admin(req.body);
-      Admin.updateAdmin(updatedAdmin).then((result) => {
-        if (!result) {
-          res.status(400).json({ message: 'Admin not updated' });
+    Admin.getAdminByUsername(req.params.username)
+      .then(async (admin) => {
+        if (!admin) {
+          res.status(404).json({ message: 'Admin not found' });
           return;
         }
-        res.status(200).json(result);
+        try {
+          // TODO: Make sure the username doesn't change and the password is hashed
+          const updatedAdmin = new Admin(req.body);
+          const result = await Admin.updateAdmin(updatedAdmin);
+          result
+            ? res.status(200).json(result)
+            : res.status(304).json({ message: 'Admin not updated' });
+        } catch (error: any) {
+          res.status(500).json({ message: error.message });
+        }
+      })
+      .catch((error) => {
+        res.status(500).json({ message: error.message });
       });
-    });
   }
 );
 
@@ -92,18 +108,20 @@ adminRoutes.put(
  *
  * @route DELETE /admins/:id
  * @param username of the admin
- * @return 200 - The deleted admin, 404 - Not found
+ * @return 202 - The deleted admin, 404 - Not found
  */
 adminRoutes.delete(
   '/:username',
   function (req: Express.Request, res: Express.Response) {
-    Admin.deleteAdminByUsername(req.params.username).then((result) => {
-      if (!result) {
-        res.status(404).json({ message: 'Quiz not found' });
-        return;
-      }
-      res.status(200).json(result);
-    });
+    Admin.deleteAdminByUsername(req.params.username)
+      .then((result) => {
+        result
+          ? res.status(202).json(result)
+          : res.status(404).json({ message: 'Admin not found' });
+      })
+      .catch((error) => {
+        res.status(500).json({ message: error.message });
+      });
   }
 );
 
