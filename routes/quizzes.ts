@@ -95,6 +95,7 @@ quizzesRoutes.put(
             oldQuiz.name = req.body.name;
             oldQuiz.questions = req.body.questions;
             oldQuiz.level = req.body.level;
+            oldQuiz.played = req.body.played;
             const result = await Quiz.updateQuiz(id, oldQuiz);
             result
               ? res.status(200).json(result)

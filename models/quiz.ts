@@ -9,6 +9,7 @@ interface IQuiz {
   questions: Schema.Types.ObjectId[];
   level: number;
   date: Date;
+  played?: number;
 }
 
 /**
@@ -49,7 +50,8 @@ const quizSchema = new Schema<IQuiz, QuizModel, IQuizMethods>({
     }
   ],
   level: Number,
-  date: { type: Date, default: Date.now }
+  date: { type: Date, default: Date.now },
+  played: { type: Number, default: 0 }
 });
 
 // Statics (Model functions)
