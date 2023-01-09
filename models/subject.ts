@@ -70,12 +70,7 @@ subjectSchema.static('getSubject', function (subjectCode: string) {
  * @returns {Promise<ISubject>} Promise of the added subject
  */
 subjectSchema.static('addSubject', async function (subject: ISubject) {
-  try {
-    return await this.create(subject);
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+  return await this.create(subject);
 });
 
 /**

@@ -74,6 +74,27 @@ Content-Type: application/json
 
 ###############################################
 
+// Test: Update question
+// Expected HTTP response status code: 202
+// 
+PUT {{url}}/questions/63ad827e9d8291b6593a00f HTTP/1.1
+Content-Type: application/json
+
+{
+  "creator": "63af18d1fb461af8dc235cc6",
+  "name": "test",
+  "question": "testa",
+  "option1": "test",
+  "optionX": "test",
+  "option2": "test",
+  "correctOption": "test",
+  "level": 1,
+  "subject": ["63aee215b2c2038cfd5bd853"],
+  "language": "test"
+}
+
+###############################################
+
 // TODO: Decide if we want to use /questions/:id
 // Test: Delete the test question
 // Expected HTTP response status code: 200 OR 404
@@ -161,7 +182,27 @@ Content-Type: application/json
 
 {
   "name": "QuizTest",
-  "creator": "test",
+  "creator": "63af18d1fb461af8dc235cc6",
+  "questions": [
+    "63ad827e9d82971b6593a00f",
+    "63ad827e9d82971b6593a010",
+    "63ad827e9d82971b6593a011",
+    "63ad827e9d82971b6593a012",
+    "63ad827e9d82971b6593a013"
+    ]
+}
+
+###############################################
+
+// Test: Update a quiz
+// Expected HTTP response status code: 201 OR 409
+// Expected response: an object (json) with a quiz
+PUT {{url}}/quizzes/63af0790b49fec7db98b3f19 HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "QuizTest",
+  "creator": "63af18d1fb461af8dc235cc6",
   "questions": [
     "63ad827e9d82971b6593a00f",
     "63ad827e9d82971b6593a010",
@@ -176,9 +217,8 @@ Content-Type: application/json
 // Test: delete quiz
 // Expected HTTP response status code: 200 OR 404
 // Expected response: an object (json) with a quiz
-DELETE {{url}}/quizzes/QuizTest
+DELETE {{url}}/quizzes/63b83a95fa93d57712348022
 
-###############################################
 ###############################################
 
 // Test: Get admins
@@ -192,7 +232,7 @@ GET {{url}}/admins
 // Test: Get admin by username
 // Expected HTTP response status code: 200
 // Expected response: an object (json)
-GET {{url}}/admins/Admin
+GET {{url}}/admins/Admin1
 
 ###############################################
 
@@ -212,13 +252,76 @@ Content-Type: application/json
 {
   "firstName": "Test",
   "lastName": "Testsson",
-  "userName": "TestAdmin",
+  "userName": "Admin1",
   "password": "Test123"
 }
 
 ###############################################
 
-// Test: Delete subject
-// Expected HTTP response status code: 200 OR 404
-// Expected response: an object (json) with a subject of economics
-DELETE {{url}}/admins/TestAdmin
+// Test: Add faulty admin
+// Expected response code: 400
+POST {{url}}/admins HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstName": "Test1",
+  "lastName": "Testsson1",
+  "userName": "Admin1",
+  "password": "Test123"
+}
+
+###############################################
+
+// Test: Update faulty admin
+// Expected response code: 400
+PUT {{url}}/admins/Admin1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstName": "",
+  "lastName": "Testsson",
+  "userName": "Admin1",
+  "password": "Test123"
+}
+
+
+###############################################
+
+// Test: Get Subjects
+GET {{url}}/subjects/
+
+###############################################
+
+// Test: Get a subject
+GET {{url}}/subjects/MAT
+
+###############################################
+
+// Test: Post a subject
+POST {{url}}/subjects/
+Content-Type: application/json
+
+{
+  "name": "aefaefaef",
+  "subjectCode": "SEX",
+  "description": "aefaefaefaef"
+}
+
+###############################################
+
+// Test: Delete a subject
+PUT {{url}}/subjects/
+Content-Type: application/json
+
+{
+  "name": "aefaefaef",
+  "subjectCode": "SzX",
+  "description": "aefaefaefaef"
+}
+
+###############################################
+
+// Test: Delete a subject
+DELETE {{url}}/subjects/SEXa
+Content-Type: application/json
+
