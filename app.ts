@@ -17,14 +17,28 @@ declare module 'express-session' {
   }
 }
 
-app.use(cors()); // CORS-enabled for all origins!
+const allowedOrigins = ['http://localhost:4200', 'https://studenter.miun.se/'];
+
+const corsOptions = {
+  credentials: true,
+  origin: allowedOrigins
+};
+
+app.use(cors(corsOptions));
 app.use(express.json()); // Parse incoming JSON payloads with express.json
 app.use(express.urlencoded({ extended: true })); // Parse incoming requests with urlencoded payloads using express.urlencoded
+
+// TODO - sätt upp secure cookies i produktion / ej secure i test enligt robbans tips
 app.use(
   expressSession({
     secret: 'hemligheten',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+      sameSite: 'none',
+      secure: false,
+      httpOnly: false
+    }
   })
 );
 app.use('/questions', questionsRoutes);

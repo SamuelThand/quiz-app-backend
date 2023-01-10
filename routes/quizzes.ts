@@ -1,6 +1,7 @@
 import Express from 'express';
 import { isValidObjectId } from 'mongoose';
 import { Quiz } from '../models/quiz';
+import { isAuthenticated } from '../middleware/authentication';
 
 const quizzesRoutes = Express.Router();
 

@@ -34,7 +34,7 @@ adminRoutes.post(
             if (error) {
               return next(error);
             }
-            res.redirect('/'); // TODO redirecta var?
+            res.status(200).json();
           });
         });
       })
