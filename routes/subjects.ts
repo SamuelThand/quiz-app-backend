@@ -1,4 +1,5 @@
 import Express from 'express';
+import { isAuthenticated } from '../middleware/authentication';
 import { Subject } from '../models/subject';
 
 const subjectRoutes = Express.Router();
@@ -48,26 +49,30 @@ subjectRoutes.get(
  * @route POST /subjects
  * @return 201 - The new subject, 409 - Conflict
  */
-subjectRoutes.post('/', function (req: Express.Request, res: Express.Response) {
-  const subject = req.body;
-  Subject.addSubject(subject)
-    .then((result) => {
-      res.status(201).json(result);
-    })
-    .catch((error) => {
-      if (error.name === 'MongoServerError' && error.code === 11000) {
-        res.status(409).json({
-          message: 'An subject already exists with that subjectCode.'
-        });
-      } else if (error.name === 'ValidationError') {
-        res
-          .status(400)
-          .json({ message: 'New subject has an incorrect format' });
-      } else {
-        res.status(500).json({ message: error.message });
-      }
-    });
-});
+subjectRoutes.post(
+  '/',
+  isAuthenticated,
+  function (req: Express.Request, res: Express.Response) {
+    const subject = req.body;
+    Subject.addSubject(subject)
+      .then((result) => {
+        res.status(201).json(result);
+      })
+      .catch((error) => {
+        if (error.name === 'MongoServerError' && error.code === 11000) {
+          res.status(409).json({
+            message: 'An subject already exists with that subjectCode.'
+          });
+        } else if (error.name === 'ValidationError') {
+          res
+            .status(400)
+            .json({ message: 'New subject has an incorrect format' });
+        } else {
+          res.status(500).json({ message: error.message });
+        }
+      });
+  }
+);
 
 /**
  * Update a subject.
@@ -75,18 +80,22 @@ subjectRoutes.post('/', function (req: Express.Request, res: Express.Response) {
  * @route PUT /subjects
  * @return 200 - The subject, 304 - Not modified
  */
-subjectRoutes.put('/', function (req: Express.Request, res: Express.Response) {
-  const subject = req.body;
-  Subject.updateSubject(subject)
-    .then((result) => {
-      result
-        ? res.status(200).json(result)
-        : res.status(304).json({ message: 'Subject not updated' });
-    })
-    .catch((error) => {
-      res.status(500).json({ message: error.message });
-    });
-});
+subjectRoutes.put(
+  '/',
+  isAuthenticated,
+  function (req: Express.Request, res: Express.Response) {
+    const subject = req.body;
+    Subject.updateSubject(subject)
+      .then((result) => {
+        result
+          ? res.status(200).json(result)
+          : res.status(304).json({ message: 'Subject not updated' });
+      })
+      .catch((error) => {
+        res.status(500).json({ message: error.message });
+      });
+  }
+);
 
 /**
  * Delete a subject by subjectCode.
@@ -97,6 +106,7 @@ subjectRoutes.put('/', function (req: Express.Request, res: Express.Response) {
  */
 subjectRoutes.delete(
   '/:subjectCode',
+  isAuthenticated,
   function (req: Express.Request, res: Express.Response) {
     const subjectCode = req.params.subjectCode;
     Subject.deleteSubject(subjectCode)

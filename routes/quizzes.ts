@@ -54,24 +54,28 @@ quizzesRoutes.get(
  * @route POST /quizzes
  * @return 201 - The new quiz, 409 - Conflict, 400 - Invalid, 500 - Error
  */
-quizzesRoutes.post('/', function (req: Express.Request, res: Express.Response) {
-  const newQuiz = new Quiz(req.body);
-  Quiz.addQuiz(newQuiz)
-    .then((result) => {
-      res.status(201).json(result);
-    })
-    .catch((error) => {
-      if (error.name === 'MongoServerError' && error.code === 11000) {
-        res
-          .status(409)
-          .json({ message: 'A quiz already exists with that id.' });
-      } else if (error.name === 'ValidationError') {
-        res.status(400).json({ message: 'New quiz has an incorrect format' });
-      } else {
-        res.status(500).json({ message: error.message });
-      }
-    });
-});
+quizzesRoutes.post(
+  '/',
+  isAuthenticated,
+  function (req: Express.Request, res: Express.Response) {
+    const newQuiz = new Quiz(req.body);
+    Quiz.addQuiz(newQuiz)
+      .then((result) => {
+        res.status(201).json(result);
+      })
+      .catch((error) => {
+        if (error.name === 'MongoServerError' && error.code === 11000) {
+          res
+            .status(409)
+            .json({ message: 'A quiz already exists with that id.' });
+        } else if (error.name === 'ValidationError') {
+          res.status(400).json({ message: 'New quiz has an incorrect format' });
+        } else {
+          res.status(500).json({ message: error.message });
+        }
+      });
+  }
+);
 
 /**
  * Update a Quiz.
@@ -82,6 +86,7 @@ quizzesRoutes.post('/', function (req: Express.Request, res: Express.Response) {
  */
 quizzesRoutes.put(
   '/:id',
+  isAuthenticated,
   function (req: Express.Request, res: Express.Response) {
     const id = req.params.id;
 
@@ -123,6 +128,7 @@ quizzesRoutes.put(
  */
 quizzesRoutes.delete(
   '/:id',
+  isAuthenticated,
   function (req: Express.Request, res: Express.Response) {
     const id = req.params.id;
 

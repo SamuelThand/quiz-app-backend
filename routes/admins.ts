@@ -45,6 +45,24 @@ adminRoutes.post(
 );
 
 /**
+ * Sign out as an admin.
+ * @route GET /admins/signout
+ * @returns 200 - Signed out, 500 - Error
+ */
+adminRoutes.get(
+  '/signout',
+  function (req: Express.Request, res: Express.Response) {
+    req.session.destroy((error) => {
+      if (error) {
+        res.status(500).json({ message: error.message });
+      } else {
+        res.status(200).json({ message: 'Signed out' });
+      }
+    });
+  }
+);
+
+/**
  * Get an array of all admins from the database.
  *
  * @route GET /admins
@@ -122,6 +140,7 @@ adminRoutes.post('/', function (req: Express.Request, res: Express.Response) {
  */
 adminRoutes.put(
   '/:username',
+  isAuthenticated,
   function (req: Express.Request, res: Express.Response) {
     Admin.getAdminByUsername(req.params.username)
       .then(async (admin) => {
@@ -156,6 +175,7 @@ adminRoutes.put(
  */
 adminRoutes.delete(
   '/:username',
+  isAuthenticated,
   function (req: Express.Request, res: Express.Response) {
     Admin.deleteAdminByUsername(req.params.username)
       .then((result) => {

@@ -1,4 +1,5 @@
 import Express from 'express';
+import { isAuthenticated } from '../middleware/authentication';
 import { isValidObjectId } from 'mongoose';
 import { Question } from '../models/question';
 
@@ -58,6 +59,7 @@ questionsRoutes.get(
  */
 questionsRoutes.post(
   '/',
+  isAuthenticated,
   function (req: Express.Request, res: Express.Response) {
     const newQuestion = new Question(req.body);
     Question.addQuestion(newQuestion)
@@ -89,6 +91,7 @@ questionsRoutes.post(
  */
 questionsRoutes.put(
   '/:id',
+  isAuthenticated,
   function (req: Express.Request, res: Express.Response) {
     const id = req.params.id;
     const body = req.body;
@@ -130,6 +133,7 @@ questionsRoutes.put(
  */
 questionsRoutes.delete(
   '/:id',
+  isAuthenticated,
   async function (req: Express.Request, res: Express.Response) {
     const id = req.params.id;
 
