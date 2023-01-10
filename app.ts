@@ -28,14 +28,14 @@ app.use(cors(corsOptions));
 app.use(express.json()); // Parse incoming JSON payloads with express.json
 app.use(express.urlencoded({ extended: true })); // Parse incoming requests with urlencoded payloads using express.urlencoded
 
-// TODO - sätt upp secure cookies i produktion / ej secure i test enligt robbans tips
+// TODO - sätt upp secure cookies i produktion (Endast med HTTPS) / ej secure i test enligt robbans tips (FÖR HTTP) / sameSite måste sättas till true för att fungera i production!
 app.use(
   expressSession({
     secret: 'hemligheten',
     resave: false,
     saveUninitialized: true,
     cookie: {
-      sameSite: 'none',
+      sameSite: true,
       secure: false,
       httpOnly: false
     }
