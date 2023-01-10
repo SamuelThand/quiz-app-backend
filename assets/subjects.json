@@ -1,17 +1,89 @@
-[
-  {
-    "name": "economics",
-    "subjectCode": "ECO",
-    "description": "Economics is the social science that studies the production, distribution, and consumption of goods and services."
+[{
+  "_id": {
+    "$oid": "63aee215b2c2038cfd5bd853"
   },
-  {
-    "name": "geography",
-    "subjectCode": "GEO",
-    "description": "Geography is the study of the lands, the features, the inhabitants, and the phenomena of Earth."
+  "name": "economics",
+  "subjectCode": "ECO",
+  "description": "Economics is the social science that studies the production, distribution, and consumption of goods and services.",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63aee25eb2c2038cfd5bd859"
   },
-  {
-    "name": "history",
-    "subjectCode": "HIS",
-    "description": "History is the study of change over time, and it covers all aspects of human society. Political, social, economic, scientific, technological, medical, cultural, intellectual, religious and military developments are all part of history."
-  }
-]
+  "name": "geography",
+  "subjectCode": "GEO",
+  "description": "Geography is the study of the lands, the features, the inhabitants, and the phenomena of Earth.",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63aee32eb2c2038cfd5bd85d"
+  },
+  "name": "history",
+  "subjectCode": "HIS",
+  "description": "History is the study of change over time, and it covers all aspects of human society. Political, social, economic, scientific, technological, medical, cultural, intellectual, religious and military developments are all part of history.",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63af0e3b5177876fb9d08442"
+  },
+  "name": "math",
+  "subjectCode": "MAT",
+  "description": "Mathematics is an area of knowledge that includes the topics of numbers, formulas and related structures, shapes and the spaces in which they are contained, and quantities and their changes.",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63b719b814bd6e576bfc34d5"
+  },
+  "name": "programming",
+  "subjectCode": "PRO",
+  "description": "Computer programming is the process of writing code to facilitate specific actions in a computer, application or software program, and instructs them on how to perform",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63b719e0d277f65b6b88c1f8"
+  },
+  "name": "science",
+  "subjectCode": "SCI",
+  "description": "Science is the study of the natural world and how the natural world works, in an empirical way using observation and experimentation.",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63b71a12d277f65b6b88c1fa"
+  },
+  "name": "chemistry",
+  "subjectCode": "CHE",
+  "description": "chemistry is the study of matter and its properties and the changes it undergoes",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63b71a43d277f65b6b88c1fc"
+  },
+  "name": "biology",
+  "subjectCode": "BIO",
+  "description": "Biology is the natural science that studies life and living organisms, including their physical structure, chemical processes, molecular interactions, physiological mechanisms, development and evolution.",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63b71a60d277f65b6b88c1fe"
+  },
+  "name": "movies",
+  "subjectCode": "MOV",
+  "description": "Movies is a subject about movies.",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63b71aefd277f65b6b88c200"
+  },
+  "name": "sports",
+  "subjectCode": "SPO",
+  "description": "Sports are physical activities or games played for competition. They often involve skill and strategy, and can be played at various levels. Some examples include soccer, basketball, and football. People participate in sports to stay active and healthy, or for entertainment as spectators.",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63bd125a29172e5d0dec45b4"
+  },
+  "name": "Other",
+  "subjectCode": "OTH",
+  "description": "Any other subject that is not previously mentioned.",
+  "__v": 0
+}]
