@@ -95,7 +95,6 @@ Content-Type: application/json
 
 ###############################################
 
-// TODO: Decide if we want to use /questions/:id
 // Test: Delete the test question
 // Expected HTTP response status code: 200 OR 404
 // Expected response: an object (json) with a questions

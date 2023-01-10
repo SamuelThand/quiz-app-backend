@@ -88,6 +88,7 @@ adminRoutes.put(
         }
         try {
           // TODO: Make sure the username doesn't change and the password is hashed
+          // Possibly no need to create a new admin, just extract the values that are changeable from body and apply to existing Admin
           const updatedAdmin = new Admin(req.body);
           const result = await Admin.updateAdmin(updatedAdmin);
           result
