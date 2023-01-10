@@ -283,6 +283,15 @@ Content-Type: application/json
   "password": "Test123"
 }
 
+###############################################
+// Test: Sign in with admin
+POST {{url}}/admins/signin HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "Admin1",
+  "password": "Test123"
+}
 
 ###############################################
 

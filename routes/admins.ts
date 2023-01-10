@@ -1,9 +1,48 @@
 import Express from 'express';
 import { Admin } from '../models/admin';
+import { isAuthenticated } from '../middleware/authentication';
 
 const adminRoutes = Express.Router();
 
-// TODO: Make sure that passwords are hashed.
+/**
+ * Log in as an admin
+ *
+ * @route POST /admins/signin
+ * @returns 304 - Found, 404 - Not found, 500 - Error
+ */
+adminRoutes.post(
+  '/signin',
+  function (req: Express.Request, res: Express.Response, next) {
+    // TODO vad är next ??
+
+    const username = req.body.username;
+    const password = req.body.password; //  TODO: Make sure that passwords are hashed.
+
+    Admin.getAdminByUsername(username)
+      .then((result) => {
+        if (!(result && result.password === password)) {
+          res.status(404).json({ message: 'Incorrect credentials' });
+          return;
+        }
+
+        req.session.regenerate((error) => {
+          if (error) {
+            next(error);
+          }
+          req.session.user = username;
+          req.session.save((error) => {
+            if (error) {
+              return next(error);
+            }
+            res.redirect('/'); // TODO redirecta var?
+          });
+        });
+      })
+      .catch((error) => {
+        res.status(500).json({ message: error.message });
+      });
+  }
+);
 
 /**
  * Get an array of all admins from the database.
@@ -11,15 +50,19 @@ const adminRoutes = Express.Router();
  * @route GET /admins
  * @returns 200 - The admins, 500 - Error
  */
-adminRoutes.get('/', function (req: Express.Request, res: Express.Response) {
-  Admin.getAdmins()
-    .then((result) => {
-      res.status(200).json(result);
-    })
-    .catch((error) => {
-      res.status(500).json({ message: error.message });
-    });
-});
+adminRoutes.get(
+  '/',
+  isAuthenticated,
+  function (req: Express.Request, res: Express.Response) {
+    Admin.getAdmins()
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((error) => {
+        res.status(500).json({ message: error.message });
+      });
+  }
+);
 
 /**
  * Get an admin by username.

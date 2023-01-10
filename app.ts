@@ -6,14 +6,27 @@ import questionsRoutes from './routes/questions';
 import subjectRoutes from './routes/subjects';
 import quizzesRoutes from './routes/quizzes';
 import adminRoutes from './routes/admins';
-// import expressSession from 'express-session';
+import expressSession from 'express-session';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+declare module 'express-session' {
+  export interface Session {
+    user?: any;
+  }
+}
+
 app.use(cors()); // CORS-enabled for all origins!
 app.use(express.json()); // Parse incoming JSON payloads with express.json
 app.use(express.urlencoded({ extended: true })); // Parse incoming requests with urlencoded payloads using express.urlencoded
+app.use(
+  expressSession({
+    secret: 'hemligheten',
+    resave: false,
+    saveUninitialized: true
+  })
+);
 app.use('/questions', questionsRoutes);
 app.use('/subjects', subjectRoutes);
 app.use('/quizzes', quizzesRoutes);
