@@ -1,8 +1,11 @@
 import Express from 'express';
 import { Admin } from '../models/admin';
 import { isAuthenticated } from '../middleware/authentication';
+import bcrypt from 'bcrypt';
 
 const adminRoutes = Express.Router();
+const saltrounds = 10;
+const salt = bcrypt.genSaltSync(saltrounds);
 
 /**
  * Determine logged in status
@@ -25,8 +28,7 @@ adminRoutes.get(
  * @returns 304 - Found, 404 - Not found, 500 - Error
  */
 adminRoutes.post(
-  // Robert Jonsson approves this route!
-  '/signin',
+  '/signin', // Robert Jonsson approves this route!
   function (req: Express.Request, res: Express.Response, next) {
     // TODO vad är next ??
 
@@ -35,7 +37,7 @@ adminRoutes.post(
 
     Admin.getAdminByUsername(username)
       .then((result) => {
-        if (!(result && result.password === password)) {
+        if (!(result && bcrypt.compareSync(password, result.password))) {
           res.status(404).json({ message: 'Incorrect credentials' });
           return;
         }
@@ -87,7 +89,13 @@ adminRoutes.get(
 adminRoutes.post(
   '/signup',
   function (req: Express.Request, res: Express.Response) {
+    // const newAdmin = new Admin(req.body);
+
     const newAdmin = new Admin(req.body);
+    newAdmin.password = bcrypt.hashSync(newAdmin.password, salt);
+
+    console.log(newAdmin.password);
+
     Admin.addAdmin(newAdmin)
       .then((result) => {
         res.status(201).json(result);

@@ -299,6 +299,18 @@ Content-Type: application/json
 GET {{url}}/admins/isloggedin HTTP/1.1
 Content-Type: application/json
 
+###############################################
+// Test: Test signup
+POST {{url}}/admins/signup HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstName": "Lada",
+  "lastName": "Nivasson",
+  "userName": "Ostjanne",
+  "password": "Test123"
+}
+
 
 ###############################################
 
