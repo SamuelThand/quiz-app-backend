@@ -30,10 +30,9 @@ adminRoutes.get(
 adminRoutes.post(
   '/signin', // Robert Jonsson approves this route!
   function (req: Express.Request, res: Express.Response, next) {
-    // TODO vad är next ??
 
     const username = req.body.username;
-    const password = req.body.password; //  TODO: Make sure that passwords are hashed.
+    const password = req.body.password;
 
     Admin.getAdminByUsername(username)
       .then((result) => {
@@ -155,7 +154,6 @@ adminRoutes.get(
   }
 );
 
-// TODO path breaks when trying to update immutable value _id
 /**
  * Update an admin.
  *
@@ -174,8 +172,6 @@ adminRoutes.put(
           return;
         }
         try {
-          // TODO: Make sure the username doesn't change and the password is hashed
-          // Possibly no need to create a new admin, just extract the values that are changeable from body and apply to existing Admin
           const updatedAdmin = new Admin(req.body);
           const result = await Admin.updateAdmin(updatedAdmin);
           result

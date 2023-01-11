@@ -1,4 +1,3 @@
-TODO ta bort azuredeployment och gör en ny, Deploya kompilerad TS i distmappen till azure och se till att det funkar med databaskoppling
 https://blog.logrocket.com/how-to-set-up-node-typescript-express/
 
 Instruktioner:
