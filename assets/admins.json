@@ -1,0 +1,103 @@
+[{
+  "_id": {
+    "$oid": "63af18d1fb461af8dc235cc6"
+  },
+  "firstName": "Test2",
+  "lastName": "Testsson2",
+  "userName": "Admin2",
+  "password": "$2b$10$8IkKeAnPtlLm5Bpj7Xa3FOmjGg1EdTY4e0hnRov37eCQhzLRJExte",
+  "date": {
+    "$date": {
+      "$numberLong": "1672419537849"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63bc452b65deb37e66d8ea01"
+  },
+  "firstName": "Test1",
+  "lastName": "Testsson1",
+  "userName": "Admin1",
+  "password": "$2b$10$8IkKeAnPtlLm5Bpj7Xa3FOmjGg1EdTY4e0hnRov37eCQhzLRJExte",
+  "date": {
+    "$date": {
+      "$numberLong": "1673282859316"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63bebbd4827d9f2e310e64d7"
+  },
+  "firstName": "Tobias",
+  "lastName": "Hansson",
+  "userName": "dallas",
+  "password": "$2b$10$cfwIm67Zr3l49jiCDITV/.0wYlaw9IzLCyUNbNAgpCZZCrBz1jXOK",
+  "date": {
+    "$date": {
+      "$numberLong": "1673444308258"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63bebbfca85b9f3e22637069"
+  },
+  "firstName": "Lada",
+  "lastName": "Nivasson",
+  "userName": "Ostjanne",
+  "password": "$2b$10$KFhjHCKx1FehsS1kYZOk9.u5UCsorBjinS1GATxybd3Hdi2nHiCpS",
+  "date": {
+    "$date": {
+      "$numberLong": "1673444348360"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63bebdeb376bf8dd39e8da39"
+  },
+  "firstName": "Samuel",
+  "lastName": "T",
+  "userName": "Samuel",
+  "password": "$2b$10$j1qchiKricOjPuvVAZA2OOqHRilVEWzPExLvKV8Vv5YotMSYLsOa6",
+  "date": {
+    "$date": {
+      "$numberLong": "1673444843501"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63becf5464037a98696fae0f"
+  },
+  "firstName": "Anton",
+  "lastName": "Gunnarsson",
+  "userName": "gunnar",
+  "password": "$2b$10$NrS3KV9VS85Uf4OA13oCouh0DABLDyFChy7AA3m.Vc/irxxp6RWnO",
+  "age": 18,
+  "sex": "Male",
+  "date": {
+    "$date": {
+      "$numberLong": "1673449300027"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63becf9064037a98696fae11"
+  },
+  "firstName": "Tobias",
+  "lastName": "Hansson",
+  "userName": "toha2102",
+  "password": "$2b$10$NrS3KV9VS85Uf4OA13oCouDy5tAOi7JKFHYcUlqRu7lh3iW47Eb2y",
+  "age": 29,
+  "sex": "Woman",
+  "date": {
+    "$date": {
+      "$numberLong": "1673449360307"
+    }
+  },
+  "__v": 0
+}]

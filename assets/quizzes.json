@@ -1,0 +1,130 @@
+[{
+  "_id": {
+    "$oid": "63bd2e92888781cc7cc93151"
+  },
+  "creator": {
+    "$oid": "63af18d1fb461af8dc235cc6"
+  },
+  "name": "Programvaruteknik",
+  "questions": [
+    {
+      "$oid": "63b717e114bd6e576bfc34a6"
+    },
+    {
+      "$oid": "63b7183e14bd6e576bfc34aa"
+    },
+    {
+      "$oid": "63b7187214bd6e576bfc34ae"
+    },
+    {
+      "$oid": "63bd30fc888781cc7cc93171"
+    },
+    {
+      "$oid": "63bd34d0888781cc7cc93183"
+    },
+    {
+      "$oid": "63bd3612bc9408579517df5f"
+    },
+    {
+      "$oid": "63bed094645217d648bdfae3"
+    },
+    {
+      "$oid": "63becef8645217d648bdfaca"
+    },
+    {
+      "$oid": "63bed0d064037a98696fae27"
+    },
+    {
+      "$oid": "63bed1ac645217d648bdfb05"
+    }
+  ],
+  "level": 2,
+  "date": {
+    "$date": {
+      "$numberLong": "1673342610057"
+    }
+  },
+  "played": 18,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63bd2f71888781cc7cc93159"
+  },
+  "creator": {
+    "$oid": "63af18d1fb461af8dc235cc6"
+  },
+  "name": "English quiz",
+  "questions": [
+    {
+      "$oid": "63bd2bef888781cc7cc93130"
+    },
+    {
+      "$oid": "63bd2c45888781cc7cc93134"
+    },
+    {
+      "$oid": "63bd2c87888781cc7cc93138"
+    },
+    {
+      "$oid": "63bd2cbb888781cc7cc9313c"
+    },
+    {
+      "$oid": "63bd2ced888781cc7cc93140"
+    },
+    {
+      "$oid": "63bd2d3b888781cc7cc93144"
+    },
+    {
+      "$oid": "63bd2d6c888781cc7cc93148"
+    },
+    {
+      "$oid": "63bd2da3888781cc7cc9314c"
+    }
+  ],
+  "level": 3,
+  "date": {
+    "$date": {
+      "$numberLong": "1673342833378"
+    }
+  },
+  "played": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63bd2f90888781cc7cc9315f"
+  },
+  "creator": {
+    "$oid": "63af18d1fb461af8dc235cc6"
+  },
+  "name": "Svensk quiz",
+  "questions": [
+    {
+      "$oid": "63bd285b888781cc7cc93114"
+    },
+    {
+      "$oid": "63bd29d3888781cc7cc93118"
+    },
+    {
+      "$oid": "63bd2a5a888781cc7cc9311c"
+    },
+    {
+      "$oid": "63bd2aa2888781cc7cc93120"
+    },
+    {
+      "$oid": "63bd2af7888781cc7cc93124"
+    },
+    {
+      "$oid": "63bd2b56888781cc7cc93128"
+    },
+    {
+      "$oid": "63bd2b8e888781cc7cc9312c"
+    }
+  ],
+  "level": 3,
+  "date": {
+    "$date": {
+      "$numberLong": "1673342864505"
+    }
+  },
+  "played": 0,
+  "__v": 0
+}]
