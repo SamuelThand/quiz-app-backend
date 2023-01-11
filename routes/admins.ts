@@ -10,7 +10,7 @@ const adminRoutes = Express.Router();
  * @route POST /admins/isloggedin
  * @returns 401 - Unathorized, 200 - OK
  */
-adminRoutes.post(
+adminRoutes.get(
   '/isloggedin',
   isAuthenticated,
   function (req: Express.Request, res: Express.Response, next) {
