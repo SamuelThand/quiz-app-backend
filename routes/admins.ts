@@ -4,6 +4,14 @@ import { isAuthenticated } from '../middleware/authentication';
 
 const adminRoutes = Express.Router();
 
+adminRoutes.post(
+  '/isloggedin',
+  isAuthenticated,
+  function (req: Express.Request, res: Express.Response, next) {
+    res.status(200).json();
+  }
+);
+
 /**
  * Log in as an admin
  *
