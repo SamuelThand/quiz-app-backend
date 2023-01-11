@@ -5,5 +5,5 @@ export function isAuthenticated(
   res: Express.Response,
   next: Function
 ) {
-  req.session.user ? next() : next('route'); // TODO vad ska vara här istället för 'route'
+  req.session.user ? next() : res.status(401).json(); // TODO vad ska vara här istället för 'route'
 }

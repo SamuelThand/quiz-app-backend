@@ -4,6 +4,12 @@ import { isAuthenticated } from '../middleware/authentication';
 
 const adminRoutes = Express.Router();
 
+/**
+ * Determine logged in status
+ *
+ * @route POST /admins/isloggedin
+ * @returns 401 - Unathorized, 200 - OK
+ */
 adminRoutes.post(
   '/isloggedin',
   isAuthenticated,
@@ -19,6 +25,7 @@ adminRoutes.post(
  * @returns 304 - Found, 404 - Not found, 500 - Error
  */
 adminRoutes.post(
+  // Robert Jonsson approves this route!
   '/signin',
   function (req: Express.Request, res: Express.Response, next) {
     // TODO vad är next ??
@@ -58,6 +65,7 @@ adminRoutes.post(
  * @returns 200 - Signed out, 500 - Error
  */
 adminRoutes.get(
+  // Robert Jonsson approves this route!
   '/signout',
   function (req: Express.Request, res: Express.Response) {
     req.session.destroy((error) => {
@@ -70,6 +78,35 @@ adminRoutes.get(
   }
 );
 
+/**
+ * Sign up with a new admin.
+ *
+ * @route POST /admins
+ * @return 201 - The new admin, 409 - Conflict, 400 - Invalid, 500 - Error
+ */
+adminRoutes.post(
+  '/signup',
+  function (req: Express.Request, res: Express.Response) {
+    const newAdmin = new Admin(req.body);
+    Admin.addAdmin(newAdmin)
+      .then((result) => {
+        res.status(201).json(result);
+      })
+      .catch((error) => {
+        if (error.name === 'MongoServerError' && error.code === 11000) {
+          res
+            .status(409)
+            .json({ message: 'An admin already exists with that username.' });
+        } else if (error.name === 'ValidationError') {
+          res
+            .status(400)
+            .json({ message: 'New admin has an incorrect format' });
+        } else {
+          res.status(500).json({ message: error.message });
+        }
+      });
+  }
+);
 /**
  * Get an array of all admins from the database.
  *
@@ -112,31 +149,6 @@ adminRoutes.get(
       });
   }
 );
-
-/**
- * Add a new admin.
- *
- * @route POST /admins
- * @return 201 - The new admin, 409 - Conflict, 400 - Invalid, 500 - Error
- */
-adminRoutes.post('/', function (req: Express.Request, res: Express.Response) {
-  const newAdmin = new Admin(req.body);
-  Admin.addAdmin(newAdmin)
-    .then((result) => {
-      res.status(201).json(result);
-    })
-    .catch((error) => {
-      if (error.name === 'MongoServerError' && error.code === 11000) {
-        res
-          .status(409)
-          .json({ message: 'An admin already exists with that username.' });
-      } else if (error.name === 'ValidationError') {
-        res.status(400).json({ message: 'New admin has an incorrect format' });
-      } else {
-        res.status(500).json({ message: error.message });
-      }
-    });
-});
 
 // TODO path breaks when trying to update immutable value _id
 /**
