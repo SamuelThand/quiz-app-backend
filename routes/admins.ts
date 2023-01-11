@@ -107,25 +107,22 @@ adminRoutes.post(
       });
   }
 );
+
 /**
  * Get an array of all admins from the database.
  *
  * @route GET /admins
  * @returns 200 - The admins, 500 - Error
  */
-adminRoutes.get(
-  '/',
-  isAuthenticated,
-  function (req: Express.Request, res: Express.Response) {
-    Admin.getAdmins()
-      .then((result) => {
-        res.status(200).json(result);
-      })
-      .catch((error) => {
-        res.status(500).json({ message: error.message });
-      });
-  }
-);
+adminRoutes.get('/', function (req: Express.Request, res: Express.Response) {
+  Admin.getAdmins()
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((error) => {
+      res.status(500).json({ message: error.message });
+    });
+});
 
 /**
  * Get an admin by username.
